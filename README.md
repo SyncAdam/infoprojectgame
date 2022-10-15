@@ -1,3 +1,3 @@
 # infoprojectgame
 
-Vous allez trouver le programme pricipale dans game.java
+Vous allez trouver le programme principale dans game.java
