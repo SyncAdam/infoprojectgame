@@ -47,6 +47,10 @@ public static void printGameTable(char[][][] gameTable){
     }
 }
 
+/*
+    L'idée est de stocker les cercles de tailles et couleurs differents dans un tableau de 3 dimension
+    progresser le jeu et dans tout les tour voir si quelqu'un a gagné ou pas
+*/
 public static void main(String[]args){
 
     //Test
@@ -56,9 +60,19 @@ public static void main(String[]args){
 
     char[][][] gameTable = new char[3][3][3];
 
+
     askNumPlayers(numplayers);
     initialiseGameTable(gameTable);
     printGameTable(gameTable);
 
+    /*
+    while(jeu pas fini) {
+
+        printGameTable(gameTable);
+        prochaineJoueurPlaceCercle();
+        voirSiQuelquunagagne();
+        
+    }
+    */
 }
 }
