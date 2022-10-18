@@ -1,6 +1,11 @@
 public class game{
 
 //fonction pour demander le nombre de joueurs
+//
+
+//
+
+//
 
 public static int askNumPlayers(int num){
 
@@ -27,31 +32,6 @@ public static int add1(int h){
 
 //fonction pour initialiser le tableau du jeu
 
-/*Game table disposition
- *
- *	0ieme couche <- tableau 2d des cercles petits
- *	1ere couche <- tableau 2d des cercles moyennes
- *	2ieme couche <- tableau 2d des cercles grandes
- *
- *	0ieme:
- *		.	.	.
- *
- *		.	.	.
- *
- *		.	.	.
- *	1ere
- *		o	o	o
- *
- *		o	o	o
- *
- *		o	o	o
- *	2ieme
- *		O	O	O
- *
- *		O	O	O
- *
- *		O	O	O
- */
 
 public static void initialiseGameTable(char[][][] gameTable){
     for(int i = 0; i < 3; i++){
