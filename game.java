@@ -28,6 +28,7 @@ public static int add1(int h){
 //fonction pour initialiser le tableau du jeu
 
 /*Game table disposition
+ * Pour créer les joueurs on utilisera une classe
  *
  *	0ieme couche <- tableau 2d des cercles petits
  *	1ere couche <- tableau 2d des cercles moyennes
