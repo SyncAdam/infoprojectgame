@@ -1,6 +1,11 @@
 public class game{
 
 //fonction pour demander le nombre de joueurs
+//
+
+//
+
+//
 
 public static int askNumPlayers(int num){
 
