@@ -14,12 +14,44 @@ public static int askNumPlayers(int num){
         num = Lire.i();
 
     }
-    System.out.println(num);
+    //System.out.println(num);
     return num;
 
 }
 
+public static int add1(int h){
+
+    return h + 1;
+
+}
+
 //fonction pour initialiser le tableau du jeu
+
+/*Game table disposition
+ *
+ *	0ieme couche <- tableau 2d des cercles petits
+ *	1ere couche <- tableau 2d des cercles moyennes
+ *	2ieme couche <- tableau 2d des cercles grandes
+ *
+ *	0ieme:
+ *		.	.	.
+ *
+ *		.	.	.
+ *
+ *		.	.	.
+ *	1ere
+ *		o	o	o
+ *
+ *		o	o	o
+ *
+ *		o	o	o
+ *	2ieme
+ *		O	O	O
+ *
+ *		O	O	O
+ *
+ *		O	O	O
+ */
 
 public static void initialiseGameTable(char[][][] gameTable){
     for(int i = 0; i < 3; i++){
@@ -27,7 +59,7 @@ public static void initialiseGameTable(char[][][] gameTable){
             for(int k = 0; k < 3; k++){
 
                                         //Remplir tout les valeurs du tableau 3 dimensionnel avec 0s
-            gameTable[i][j][k] = 48; //Char table a besoin du valeur 48 pour afficher 0
+                gameTable[i][j][k] = 48; //Char table a besoin du valeur 48 pour afficher 0
         }
         }
     }
@@ -57,6 +89,7 @@ public static void main(String[]args){
     //Pour faciliter la vie     System.out.println("");
 
     int numplayers = 0;
+    int x = 3;
 
     char[][][] gameTable = new char[3][3][3];
 
