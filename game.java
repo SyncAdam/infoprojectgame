@@ -37,9 +37,10 @@ public class game{
 public class Player{
 
     String name;
-    String color;
-    int[][] playercircles = new int[3][3];
-
+    String color;                               //Réfléchissons - Est-ce qu'on a besoin de faire un tableau 3x3 ou il suffit de faire
+    int[][] playercircles = new int[3][3];      //un tableau 3x2 avec dans le premier ligne le nombre référentiel et le 2ieme combien
+                                                //il y en a
+                                                
     //Constructeur
 
     Player(int n){
@@ -95,12 +96,15 @@ public static void writePlayerTab(Player p){
 
         for(int j = 0; j < 3; j++){
 
-            System.out.print(p.playercircles[i][j]);
+            System.out.print(p.playercircles[i][j] + " ");
 
         }
         
-        System.out.print("\n");
+        if(i == 0) System.out.println(" <- cercles petits");
+        if(i == 1) System.out.println(" <- cercles moyens");
+        if(i == 2) System.out.println(" <- cercles grands");
     }
+    System.out.print("\n");
 }
 
 //fonction pour demander le nombre de joueurs
