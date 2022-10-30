@@ -33,32 +33,7 @@
 
 public class game{
 
-// Créer des joueurs
-public class Player{
-
-    String name;
-    String color;                               //Réfléchissons - Est-ce qu'on a besoin de faire un tableau 3x3 ou il suffit de faire
-    int[][] playercircles = new int[3][3];      //un tableau 3x2 avec dans le premier ligne le nombre référentiel et le 2ieme combien
-                                                //il y en a
-                                                
-    //Constructeur
-
-    Player(int n){
-        this.name = "nom de defaut";
-        this.color =  "noir";
-
-        for(int i = 0; i < 3; i++){
-
-            for(int j = 0; j < 3; j++){
-
-                this.playercircles[i][j] = n + 1;
-
-            }
-        }
-    }
-}
-
-// Créer des joueurs s'ils sont 2 avec 2 couleurs
+//Créer des joueurs s'ils sont 2 avec 2 couleurs
 //public class Player2{}
 
 public static Player[] createPlayers(int num){
@@ -67,7 +42,7 @@ public static Player[] createPlayers(int num){
 
     for(int i = 0; i < num; i++){
 
-        p[i] = new game(). new Player(i);             // ????????????????????????????????? class Player n'est pas static????
+        p[i] = new Player(i);
 
         System.out.print("Donnez le nom du " + (i+1) + "ieme joueur: ");
         p[i].name = Lire.S();
@@ -94,7 +69,7 @@ public static void writePlayerTab(Player p){
 
     for(int i = 0; i < 3; i++){
 
-        for(int j = 0; j < 3; j++){
+        for(int j = 0; j < 2; j++){
 
             System.out.print(p.playercircles[i][j] + " ");
 
