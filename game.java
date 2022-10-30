@@ -1,52 +1,29 @@
-public class game{
+/*
+    L'idée est de stocker les cercles de tailles et couleurs differents dans un tableau de 3 dimension
+    progresser le jeu et dans tout les tour voir si quelqu'un a gagné ou pas
+*/
 
-//fonction pour demander le nombre de joueurs
-
-public static int askNumPlayers(int num){
-
-    System.out.println("===========================");
-    System.out.println("Bienvenue au jeu d'Otrio \n");
-    System.out.println("Saisissez le nombre de joueurs dans votre jeu");
-    num = Lire.i();
-    while(num < 2 || num > 4){
-
-        System.out.println("Le nombre de joueurs ne peut pas dépasser 4");
-        num = Lire.i();
-
-    }
-    //System.out.println(num);
-    return num;
-
-}
-
-public static int add1(int h){
-
-    return h + 1;
-
-}
-
-//fonction pour initialiser le tableau du jeu
-
-/*Game table disposition
- * Pour créer les joueurs on utilisera une classe
+/* Disposition du tableau du jeu
  *
  *	0ieme couche <- tableau 2d des cercles petits
  *	1ere couche <- tableau 2d des cercles moyennes
  *	2ieme couche <- tableau 2d des cercles grandes
  *
- *	0ieme:
+ *  Exemple: Tableau[i][j][k]
+ * 
+ *	0ieme:  ou k = 0
  *		.	.	.
  *
  *		.	.	.
  *
  *		.	.	.
- *	1ere
+ *	1ere    ou k = 1
  *		o	o	o
  *
  *		o	o	o
  *
  *		o	o	o
- *	2ieme
+ *	2ieme   ou k = 2
  *		O	O	O
  *
  *		O	O	O
@@ -54,21 +31,127 @@ public static int add1(int h){
  *		O	O	O
  */
 
-public static void initialiseGameTable(char[][][] gameTable){
-    for(int i = 0; i < 3; i++){
-        for(int j = 0; j < 3; j++){
-            for(int k = 0; k < 3; k++){
+public class game{
 
-                                        //Remplir tout les valeurs du tableau 3 dimensionnel avec 0s
-                gameTable[i][j][k] = 48; //Char table a besoin du valeur 48 pour afficher 0
-        }
+// Créer des joueurs
+public class Player{
+
+    String name;
+    String color;                               //Réfléchissons - Est-ce qu'on a besoin de faire un tableau 3x3 ou il suffit de faire
+    int[][] playercircles = new int[3][3];      //un tableau 3x2 avec dans le premier ligne le nombre référentiel et le 2ieme combien
+                                                //il y en a
+                                                
+    //Constructeur
+
+    Player(int n){
+        this.name = "nom de defaut";
+        this.color =  "noir";
+
+        for(int i = 0; i < 3; i++){
+
+            for(int j = 0; j < 3; j++){
+
+                this.playercircles[i][j] = n + 1;
+
+            }
         }
     }
 }
 
-public static void printGameTable(char[][][] gameTable){
+// Créer des joueurs s'ils sont 2 avec 2 couleurs
+//public class Player2{}
+
+public static Player[] createPlayers(int num){
+
+    Player[] p = new Player[num];
+
+    for(int i = 0; i < num; i++){
+
+        p[i] = new game(). new Player(i);             // ????????????????????????????????? class Player n'est pas static????
+
+        System.out.print("Donnez le nom du " + (i+1) + "ieme joueur: ");
+        p[i].name = Lire.S();
+        System.out.print("\n");
+
+        System.out.print("Donnez le couleur du " + (i+1) + "ieme joueur: ");
+        p[i].color = Lire.S();
+        System.out.print("\n");
+
+    }
+    return p;
+}
+
+public static void writePlayerNamesWithColors(int num, Player[] p){
+
+    for(int i = 0; i < num; i++){
+
+        System.out.println((p[i].name) + "  ->  " + p[i].color);
+
+    }
+}
+
+public static void writePlayerTab(Player p){
+
     for(int i = 0; i < 3; i++){
+
         for(int j = 0; j < 3; j++){
+
+            System.out.print(p.playercircles[i][j] + " ");
+
+        }
+        
+        if(i == 0) System.out.println(" <- cercles petits");
+        if(i == 1) System.out.println(" <- cercles moyens");
+        if(i == 2) System.out.println(" <- cercles grands");
+    }
+    System.out.print("\n");
+}
+
+//fonction pour demander le nombre de joueurs
+public static int askNumPlayers(){
+
+    int num;
+
+    System.out.println("===========================");
+    System.out.println("Bienvenue au jeu d'Otrio \n");
+    System.out.print("Saisissez le nombre de joueurs dans votre jeu: ");
+
+    num = Lire.i();
+
+    while(num < 2 || num > 4){
+
+        System.out.println("Le nombre de joueurs ne peut pas dépasser 4");
+        num = Lire.i();
+
+    }
+
+    return num;
+}
+
+//fonction pour initialiser le tableau du jeu
+public static void initialiseGameTable(int[][][] gameTable){
+
+    for(int i = 0; i < 3; i++){
+
+        for(int j = 0; j < 3; j++){
+
+            for(int k = 0; k < 3; k++){
+                                            //Remplir tout les valeurs du tableau 3 dimensionnel avec 0s
+                gameTable[i][j][k] = 0;     //Char table a besoin du valeur 48 pour afficher 0
+            }
+        }
+    }
+}
+
+//Methode pour afficher le tableau du jeu sur l'ecran
+public static void printGameTable(int[][][] gameTable){
+
+    for(int i = 0; i < 3; i++){
+
+        System.out.print("\n\n");
+
+        for(int j = 0; j < 3; j++){
+
             for(int k = 0; k < 3; k++){
 
                 System.out.print(gameTable[i][j][k] + "  ");
@@ -76,27 +159,31 @@ public static void printGameTable(char[][][] gameTable){
             }
             System.out.print("\n");
         }
-        System.out.print("\n\n");
     }
 }
 
-/*
-    L'idée est de stocker les cercles de tailles et couleurs differents dans un tableau de 3 dimension
-    progresser le jeu et dans tout les tour voir si quelqu'un a gagné ou pas
-*/
 public static void main(String[]args){
 
     //Test
     //Pour faciliter la vie     System.out.println("");
 
-    int numplayers = 0;
-    int x = 3;
 
-    char[][][] gameTable = new char[3][3][3];
+    int[][][] gameTable = new int[3][3][3];
 
+    int numplayers = askNumPlayers();
 
-    askNumPlayers(numplayers);
+    System.out.println("Creation des joueurs...");
+
+    Player[] Playertableau = createPlayers(numplayers);
+
+    writePlayerNamesWithColors(numplayers, Playertableau);
+
+    for(int i = 0; i < numplayers; i++){
+        writePlayerTab(Playertableau[i]);
+    }
+
     initialiseGameTable(gameTable);
+
     printGameTable(gameTable);
 
     /*
