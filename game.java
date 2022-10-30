@@ -48,9 +48,25 @@ public static Player[] createPlayers(int num){
         p[i].name = Lire.S();
         System.out.print("\n");
 
+        while(p[i].name == ""){
+
+            System.out.print("Donnez un nom non nul pour le " + (i+1) + "ieme joueur: ");
+            p[i].name = Lire.S();
+            System.out.print("\n");
+
+        }
+
         System.out.print("Donnez le couleur du " + (i+1) + "ieme joueur: ");
         p[i].color = Lire.S();
         System.out.print("\n");
+
+        while(p[i].name == ""){
+
+            System.out.print("Donnez un couleur non nul pour le " + (i+1) + "ieme joueur: ");
+            p[i].name = Lire.S();
+            System.out.print("\n");
+            
+        }
 
     }
     return p;
@@ -67,11 +83,16 @@ public static void writePlayerNamesWithColors(int num, Player[] p){
 
 public static void writePlayerTab(Player p){
 
+    System.out.println("Nom de Joueur: " + p.name);
+    System.out.println("Couleur de Joueur: " + p.color);
+    System.out.println("ident. | quant. |     taille ");
+
     for(int i = 0; i < 3; i++){
 
         for(int j = 0; j < 2; j++){
 
-            System.out.print(p.playercircles[i][j] + " ");
+            System.out.print("     ");
+            System.out.print(p.playercircles[i][j] + " | ");
 
         }
         
