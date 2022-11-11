@@ -150,7 +150,7 @@ public static void printGameTable(int[][][] gameTable){
 
             for(int k = 0; k < 3; k++){
 
-                System.out.print(gameTable[i][j][k] + "  ");
+                System.out.print(gameTable[k][j][i] + "  ");
 
             }
             System.out.print("\n");
