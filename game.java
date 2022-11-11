@@ -60,10 +60,10 @@ public static Player[] createPlayers(int num){
         p[i].color = Lire.S();
         System.out.print("\n");
 
-        while(p[i].name == ""){
+        while(p[i].color == ""){
 
             System.out.print("Donnez un couleur non nul pour le " + (i+1) + "ieme joueur: ");
-            p[i].name = Lire.S();
+            p[i].color = Lire.S();
             System.out.print("\n");
             
         }
@@ -162,7 +162,6 @@ public static void main(String[]args){
 
     //Test
     //Pour faciliter la vie     System.out.println("");
-
 
     int[][][] gameTable = new int[3][3][3];
 
