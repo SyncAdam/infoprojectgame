@@ -165,20 +165,20 @@ public static int[][][] placeElement(int[][][] X, Player[] Players, int n, char 
 
     switch (t) {
         case 'p':
-            if(X[coord[0]-1][coord[1]-1][0] == 0 && Players[n].playercircles[1][0] != 0){
+            if(X[coord[0]-1][coord[1]-1][0] == 0 && Players[n].playercircles[0][1] != 0){
                 X[coord[0]-1][coord[1]-1][0] = Players[n].playercircles[0][0];
                 Players[n].playercircles[0][1] -= 1;
             }
             break;
         case 'm':
             if(X[coord[0]-1][coord[1]-1][0] == 0 && Players[n].playercircles[1][1] != 0){
-                X[coord[0]-1][coord[1]-1][1] = Players[n].playercircles[1][0];
+                X[coord[0]-1][coord[1]-1][1] = Players[n].playercircles[0][0];
                 Players[n].playercircles[1][1] -= 1;
             }
             break;
         case 'g':
-            if(X[coord[0]-1][coord[1]-1][0] == 0 && Players[n].playercircles[1][2] != 0){
-                X[coord[0]-1][coord[1]-1][2] = Players[n].playercircles[2][0];
+            if(X[coord[0]-1][coord[1]-1][0] == 0 && Players[n].playercircles[2][1] != 0){
+                X[coord[0]-1][coord[1]-1][2] = Players[n].playercircles[0][0];
                 Players[n].playercircles[2][1] -= 1;
             }
             break;
