@@ -151,11 +151,52 @@ public static void printGameTable(int[][][] gameTable){
             for(int k = 0; k < 3; k++){
 
                 System.out.print(gameTable[k][j][i] + "  ");
+                if(k < 2) System.out.print(" | ");
 
             }
             System.out.print("\n");
+            if(j < 2) System.out.print("---------------");
+            System.out.print("\n");
         }
     }
+}
+
+public static int[][][] placeElement(int[][][] X, Player[] Players, int n, char t, int[] coord){
+
+    switch (t) {
+        case 'p':
+            if(X[coord[0]-1][coord[1]-1][0] == 0 && Players[n].playercircles[1][0] != 0){
+                X[coord[0]-1][coord[1]-1][0] = Players[n].playercircles[0][0];
+                Players[n].playercircles[0][1] -= 1;
+            }
+            break;
+        case 'm':
+            if(X[coord[0]-1][coord[1]-1][0] == 0 && Players[n].playercircles[1][1] != 0){
+                X[coord[0]-1][coord[1]-1][1] = Players[n].playercircles[1][0];
+                Players[n].playercircles[1][1] -= 1;
+            }
+            break;
+        case 'g':
+            if(X[coord[0]-1][coord[1]-1][0] == 0 && Players[n].playercircles[1][2] != 0){
+                X[coord[0]-1][coord[1]-1][2] = Players[n].playercircles[2][0];
+                Players[n].playercircles[2][1] -= 1;
+            }
+            break;
+    
+        default:
+            System.out.println("Aucun élément n'a été placé");
+            break;
+    }
+
+    return X;
+}
+
+public static void clearOutputStream(){
+
+    System.out.println("\f");
+    System.out.print("\033[H\033[2J");
+    System.out.flush();
+
 }
 
 public static void main(String[]args){
@@ -163,23 +204,65 @@ public static void main(String[]args){
     //Test
     //Pour faciliter la vie     System.out.println("");
 
-    int[][][] gameTable = new int[3][3][3];
+    clearOutputStream();
 
+    String userInput;
+    char size = 0;
+    int cp = 0;
+
+    int[] coords = new int[2];
+    int[][][] gameTable = new int[3][3][3];
     int numplayers = askNumPlayers();
 
     System.out.println("Creation des joueurs...");
-
     Player[] Playertableau = createPlayers(numplayers);
 
+    initialiseGameTable(gameTable);
+    clearOutputStream();
     writePlayerNamesWithColors(numplayers, Playertableau);
 
     for(int i = 0; i < numplayers; i++){
         writePlayerTab(Playertableau[i]);
     }
 
-    initialiseGameTable(gameTable);
+    while(true){
 
-    printGameTable(gameTable);
+        printGameTable(gameTable);
+
+        System.out.println("Qui joue?");
+        cp = Lire.i();
+
+        writePlayerTab(Playertableau[cp]);
+
+        System.out.println("Placing a circle");
+        userInput = Lire.S();
+        String[] splitted = userInput.split(" ", 3);
+        for(int i = 0; i < 3; i++){
+            System.out.println(splitted[i]);
+        }
+
+        try{
+            coords[0] = Integer.parseInt(splitted[0]);
+            coords[1] = Integer.parseInt(splitted[1]);
+            size = splitted[2].charAt(0);
+        }
+        catch (NumberFormatException ex){
+            ex.printStackTrace();
+        }
+        
+
+        clearOutputStream();    
+        placeElement(gameTable, Playertableau, cp, size ,coords);
+    }
+
+/*
+    writePlayerNamesWithColors(numplayers, Playertableau);
+
+    for(int i = 0; i < numplayers; i++){
+        writePlayerTab(Playertableau[i]);
+    }
+*/
+
 
     /*
     while(jeu pas fini) {
@@ -192,3 +275,4 @@ public static void main(String[]args){
     */
 }
 }
+
