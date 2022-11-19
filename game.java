@@ -1,3 +1,5 @@
+import f.*;
+
 /*
     L'idée est de stocker les cercles de tailles et couleurs differents dans un tableau de 3 dimension
     progresser le jeu et dans tout les tour voir si quelqu'un a gagné ou pas
@@ -31,10 +33,12 @@
  *		O	O	O
  */
 
-public class game{
+public class game{  
 
 //Créer des joueurs s'ils sont 2 avec 2 couleurs
 //public class Player2{}
+
+
 
 public static Player[] createPlayers(int num){
 
@@ -128,38 +132,15 @@ public static int askNumPlayers(){
 public static void initialiseGameTable(int[][][] gameTable){
 
     for(int i = 0; i < 3; i++){
-
         for(int j = 0; j < 3; j++){
-
             for(int k = 0; k < 3; k++){
                                             //Remplir tout les valeurs du tableau 3 dimensionnel avec 0s
-                gameTable[i][j][k] = 0;     //Char table a besoin du valeur 48 pour afficher 0
+                gameTable[k][j][i] = 0;     //Char table a besoin du valeur 48 pour afficher 0
             }
         }
     }
 }
 
-//Methode pour afficher le tableau du jeu sur l'ecran
-public static void printGameTable(int[][][] gameTable){
-
-    for(int i = 0; i < 3; i++){
-
-        System.out.print("\n\n");
-
-        for(int j = 0; j < 3; j++){
-
-            for(int k = 0; k < 3; k++){
-
-                System.out.print(gameTable[k][j][i] + "  ");
-                if(k < 2) System.out.print(" | ");
-
-            }
-            System.out.print("\n");
-            if(j < 2) System.out.print("---------------");
-            System.out.print("\n");
-        }
-    }
-}
 
 public static int[][][] placeElement(int[][][] X, Player[] Players, int n, char t, int[] coord){
 
@@ -191,20 +172,16 @@ public static int[][][] placeElement(int[][][] X, Player[] Players, int n, char 
     return X;
 }
 
-public static void clearOutputStream(){
 
-    System.out.println("\f");
-    System.out.print("\033[H\033[2J");
-    System.out.flush();
-
-}
 
 public static void main(String[]args){
 
     //Test
     //Pour faciliter la vie     System.out.println("");
 
-    clearOutputStream();
+    ecran f = new ecran();
+
+    affichage.clearOutputStream();
 
     String userInput;
     char size = 0;
@@ -218,7 +195,7 @@ public static void main(String[]args){
     Player[] Playertableau = createPlayers(numplayers);
 
     initialiseGameTable(gameTable);
-    clearOutputStream();
+    affichage.clearOutputStream();
     writePlayerNamesWithColors(numplayers, Playertableau);
 
     for(int i = 0; i < numplayers; i++){
@@ -227,7 +204,7 @@ public static void main(String[]args){
 
     while(true){
 
-        printGameTable(gameTable);
+        affichage.printGameTable(gameTable);
 
         System.out.println("Qui joue?");
         cp = Lire.i();
@@ -251,7 +228,7 @@ public static void main(String[]args){
         }
         
 
-        clearOutputStream();    
+        affichage.clearOutputStream();    
         placeElement(gameTable, Playertableau, cp, size ,coords);
     }
 
@@ -274,5 +251,6 @@ public static void main(String[]args){
     }
     */
 }
+
 }
 
