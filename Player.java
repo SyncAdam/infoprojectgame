@@ -1,13 +1,3 @@
-/*
- * Comment ca marche un joueur?
- * Tout les joueurs ont un nom un couleur et un tableau de morpilles a la facon suivante
- * 
- * nombre qui correspond á joueur par ex 1
- * [1][1][1]
- * [3][3][3]
- * Il lui reste
- */
-
 public class Player{
 
     String name;
