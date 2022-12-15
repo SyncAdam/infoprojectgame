@@ -73,9 +73,7 @@ public static void main(String[]args){
             ex.printStackTrace();
         }        
 
-        aff.clearOutputStream(); 
-
-        //rechercher pour optimiser si possible
+        aff.clearOutputStream();
 
         try{
             gameTable = gest.placeElement(gameTable, Playertableau, cp, size ,coords);
