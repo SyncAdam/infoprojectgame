@@ -39,12 +39,14 @@ public static void main(String[]args){
     String userInput;
     char size = 0;
     int cp = 0;
+    int t = -1;
     int[] coords = new int[2];
     int[][][] gameTable = new int[3][3][3];
     int numplayers = gest.askNumPlayers();
+    boolean gagne = false;
 
     System.out.println("Creation des joueurs...");
-    Player[] Playertableau = gest.createPlayers(numplayers);
+    Player[] Playertableau = gest.createPlayers(numplayers, false); //á changer
 
     gameTable = gest.initialiseGameTable();
     aff.clearOutputStream();
@@ -54,37 +56,70 @@ public static void main(String[]args){
     //     aff.writePlayerTab(Playertableau[i]);
     // }
 
-    while(true){
+    while(!gagne){
+
+        if(cp == numplayers) cp = 0;
 
         aff.printGameTable(gameTable);
 
         aff.writePlayerTab(Playertableau[cp]);
 
         System.out.println("Place un pion " + Playertableau[cp].name);
+
+
         userInput = Lire.S();
         String[] splitted = userInput.split(" ", 3);
+
+        boolean goodInput = false;
 
         try{
             coords[0] = Integer.parseInt(splitted[0]);
             coords[1] = Integer.parseInt(splitted[1]);
             size = splitted[2].charAt(0);
+            t = gest.convertSize(size);
+            goodInput = true;
         }
-        catch (NumberFormatException | ArrayIndexOutOfBoundsException ex){
-            ex.printStackTrace();
-        }        
-
-        aff.clearOutputStream();
-
-        try{
-            gameTable = gest.placeElement(gameTable, Playertableau, cp, size ,coords);
-            cp++;
-
-        }
-        catch(mPE | ArrayIndexOutOfBoundsException e){
-            e.printStackTrace();
+        catch (NumberFormatException | ArrayIndexOutOfBoundsException | mPE | StringIndexOutOfBoundsException ex){
+            //ex.printStackTrace();
+            System.out.println("Reessayez");
         }
 
-        if(cp == numplayers) cp = 0;
+        while(!goodInput){
+            
+            userInput = Lire.S();
+            splitted = userInput.split(" ", 3);
+
+            try{
+                coords[0] = Integer.parseInt(splitted[0]);
+                coords[1] = Integer.parseInt(splitted[1]);
+                size = splitted[2].charAt(0);
+                t = gest.convertSize(size);
+                goodInput = true;
+            }
+            catch (NumberFormatException | ArrayIndexOutOfBoundsException | mPE | StringIndexOutOfBoundsException ex){
+                //ex.printStackTrace();
+                System.out.println("Reessayez");
+            }
+        }
+
+        aff.clearOutputStream();      
+ 
+        if(gest.hasElement(Playertableau, cp, t)){
+            try{
+                gameTable = gest.placeElement(gameTable, Playertableau, cp, t, coords);
+                if(fonction.check(gameTable, Playertableau[cp].playercircles[0][0]) != 0){
+                    gagne = true;
+                    aff.printTrophy();
+                    continue;
+                }
+                cp++;
+            }
+            catch(mPE e){
+                e.printStackTrace();
+            }
+            
+        }
+
     }
 
 }

@@ -14,24 +14,81 @@ public class aff {
 
 
     //Methode pour afficher le tableau du jeu sur l'ecran
-    public static void printGameTable(int[][][] gameTable){
+    public static void printGameTable(int[][][]gameTable){
 
         for(int i = 0; i < 3; i++){
 
             System.out.print("\n\n");
+            printGameTableLine(gameTable,i);
 
+        }
+        System.out.print("\n\n");
+
+        for(int i = 0; i < 3; i++){
             for(int j = 0; j < 3; j++){
-
                 for(int k = 0; k < 3; k++){
-
-                    System.out.print(gameTable[k][j][i] + "  ");
-                    if(k < 2) System.out.print(" | ");
-
+                    System.out.print(gameTable[k][j][i] + ""); 
                 }
                 System.out.print("\n");
-                if(j < 2) System.out.print("---------------");
-                System.out.print("\n");
             }
+            System.out.print("\n");      
+        }
+
+    }
+
+    public static void printTrophy(){
+        System.out.println("⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀");
+        System.out.println("⠀⠀⣀⠀⢀⣶⣿⡛⠛⠋⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠙⠛⢛⣿⣶⡄⠀⣀⠀⠀");
+        System.out.println("⠀⠀⣿⣧⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣼⣿⠀⠀");
+        System.out.println("⠀⠀⣿⡏⠉⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠉⢹⣿⠀⠀");
+        System.out.println("⠀⠀⢻⣧⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⠀⣼⡏⠀⠀");
+        System.out.println("⠀⠀⠘⣿⡄⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⢰⣿⠃⠀⠀");
+        System.out.println("⠀⠀⠀⠹⣷⡀⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⢠⣿⡏⠀⠀⠀");
+        System.out.println("⠀⠀⠀⠀⢻⣿⣄⢀⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⣠⣿⡟⠀⠀⠀⠀");
+        System.out.println("⠀⠀⠀⠀⠀⠙⣿⣾⡿⠋⠻⣿⣿⣿⣿⣿⣿⣿⣿⠟⠙⢿⣿⣿⠏⠀⠀⠀⠀⠀");
+        System.out.println("⠀⠀⠀⠀⠀⠀⠈⠻⠟⠀⠀⠀⢹⣿⣿⣿⣿⡏⠀⠀⠀⠻⠟⠁⠀⠀⠀⠀⠀⠀");
+        System.out.println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣿⣿⣿⣿⡟⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+        System.out.println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+        System.out.println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⣿⣿⣿⣿⣿⣿⣦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+        System.out.println("⠀⠀⠀⠀⠀⠀⠀⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⠀⠀⠀⠀⠀⠀⠀");
+        System.out.println("⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠉⠛⠛⠛⠛⠉⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀");
+    }
+
+    public static void printGameTableLine(int[][][] gameTable, int i){
+
+        for(int j = 0; j < 3; j++){
+
+            System.out.print(" | ");
+            System.out.print((Integer.toString(gameTable[j][i][2]))+" " + (Integer.toString(gameTable[j][i][2]))+" " + (Integer.toString(gameTable[j][i][2]))+" " + (Integer.toString(gameTable[j][i][2]))+" " + (Integer.toString(gameTable[j][i][2])));
+        
+        }
+        System.out.print("\n");
+        for(int j = 0; j < 3; j++){
+
+            System.out.print(" | ");
+            System.out.print(Integer.toString(gameTable[j][i][2]) +" "+ Integer.toString(gameTable[j][i][1]) +" "+ Integer.toString(gameTable[j][i][1]) +" "+ Integer.toString(gameTable[j][i][1]) +" "+ Integer.toString(gameTable[j][i][2]));
+        
+        }
+        System.out.print("\n");
+        for(int j = 0; j < 3; j++){
+
+            System.out.print(" | ");
+            System.out.print(Integer.toString(gameTable[j][i][2]) +" "+ Integer.toString(gameTable[j][i][1]) +" "+ Integer.toString(gameTable[j][i][0]) +" "+ Integer.toString(gameTable[j][i][1]) +" "+ Integer.toString(gameTable[j][i][2]));
+        
+        }
+        System.out.print("\n");
+        for(int j = 0; j < 3; j++){
+
+            System.out.print(" | ");
+            System.out.print(Integer.toString(gameTable[j][i][2]) +" "+ Integer.toString(gameTable[j][i][1]) +" "+ Integer.toString(gameTable[j][i][1]) +" "+ Integer.toString(gameTable[j][i][1]) +" "+ Integer.toString(gameTable[j][i][2]));
+        
+        }
+        System.out.print("\n");
+        for(int j = 0; j < 3; j++){
+
+            System.out.print(" | ");
+            System.out.print(Integer.toString(gameTable[j][i][2]) +" "+ Integer.toString(gameTable[j][i][2]) +" "+ Integer.toString(gameTable[j][i][2]) +" "+ Integer.toString(gameTable[j][i][2]) +" "+ Integer.toString(gameTable[j][i][2]));
+        
         }
     }
  

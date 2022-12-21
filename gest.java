@@ -24,13 +24,15 @@ public class gest {
     }
 
     //Creer les jouers
-    public static Player[] createPlayers(int num){
-
+    public static Player[] createPlayers(int num, boolean contrepc){
+        int i;
         Player[] p = new Player[num];
     
-        for(int i = 0; i < num; i++){
-    
+        for(i = 0; i < num; i++){
+
             p[i] = new Player(i);
+
+            if(!contrepc || i != num-1){
     
             System.out.print("Donnez le nom du " + (i+1) + "ieme joueur: ");
             p[i].name = Lire.S();
@@ -55,6 +57,12 @@ public class gest {
                 System.out.print("\n");
                 
             }
+            }
+            else{
+                p[i].name = "ROBOT";
+                p[i].color = "Black";
+                p[i].isRobot = true;
+            }
     
         }
         return p;
@@ -78,59 +86,59 @@ public class gest {
         return gT;
     }
 
+    public static int convertSize(char c) throws mPE{
+        int t;
+        switch (c) {
+            case 'p':
+                t = 0;
+                break;
+            case 'P':
+                t = 0;
+            break;
+            case 'm':
+                t = 1;
+            break;
+            case 'M':
+                t = 1;
+            break;
+            case 'g':
+                t = 2;
+            break;
+            case 'G':
+                t = 2;
+            break;
+            default:
+                throw new mPE("Nope");
+        }
+        return t;
+    }
+
+    public static boolean hasElement(Player[] P, int p, int t){
+        if(P[p].playercircles[t][1] == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
 
     //Placer un pion
-    public static int[][][] placeElement(int[][][] M, Player[] Players, int n, char t, int[] coord) throws mPE{
+    public static int[][][] placeElement(int[][][] M, Player[] Players, int n, int t, int[] coord) throws mPE{
 
         int[][][] X = M;
 
-        switch (t) {
-            case 'p':
-                if(X[coord[0]-1][coord[1]-1][0] == 0 && Players[n].playercircles[0][1] != 0){
-                    X[coord[0]-1][coord[1]-1][0] = Players[n].playercircles[0][0];
-                    Players[n].playercircles[0][1] -= 1;
-                }
-                break;
-            case 'P':
-                if(X[coord[0]-1][coord[1]-1][0] == 0 && Players[n].playercircles[0][1] != 0){
-                    X[coord[0]-1][coord[1]-1][0] = Players[n].playercircles[0][0];
-                    Players[n].playercircles[0][1] -= 1;
-                }
-                break;    
-            case 'm':
-                if(X[coord[0]-1][coord[1]-1][0] == 0 && Players[n].playercircles[1][1] != 0){
-                    X[coord[0]-1][coord[1]-1][1] = Players[n].playercircles[0][0];
-                    Players[n].playercircles[1][1] -= 1;
-                }
-                break;
-            case 'M':
-                if(X[coord[0]-1][coord[1]-1][0] == 0 && Players[n].playercircles[1][1] != 0){
-                    X[coord[0]-1][coord[1]-1][1] = Players[n].playercircles[0][0];
-                    Players[n].playercircles[1][1] -= 1;
-                }
-            break;
-            case 'g':
-                if(X[coord[0]-1][coord[1]-1][0] == 0 && Players[n].playercircles[2][1] != 0){
-                    X[coord[0]-1][coord[1]-1][2] = Players[n].playercircles[0][0];
-                    Players[n].playercircles[2][1] -= 1;
-                }
-                break;
-            case 'G':
-                if(X[coord[0]-1][coord[1]-1][0] == 0 && Players[n].playercircles[2][1] != 0){
-                    X[coord[0]-1][coord[1]-1][2] = Players[n].playercircles[0][0];
-                    Players[n].playercircles[2][1] -= 1;
-                }
-                break;
-        
-            default:
-                throw new mPE("Impossible de placer un pion");
+        if(X[coord[0]-1][coord[1]-1][t] == 0){
+
+            X[coord[0]-1][coord[1]-1][t] = Players[n].playercircles[0][0];
+            Players[n].playercircles[t][1] -= 1;
+
         }
+        else{
+            throw new mPE("Impossible de placer un pion");
+        }            
+    return X;        
 
-        return X;
-    }
-
-    
-
-    
+    }  
 
 }
