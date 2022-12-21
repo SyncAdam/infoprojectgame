@@ -56,26 +56,26 @@ public class GUI {
 		}
 		Home.setVisible(true);
 	}
-	public void placePawn( int Posx, int Posy, int Size, int PlayerId) {
+	public void placePawn(int Posx, int Posy, int Size, int PlayerId) {
 		
-		int Pos =12; //permet de déf la position dans le bon format : x,y --> [0,8]
-		if(Posx == 0 && Posy ==2) {Pos = 0;}
-		if(Posx == 1 && Posy ==2) {Pos = 1;}
-		if(Posx == 2 && Posy ==2) {Pos = 2;}
-		if(Posx == 0 && Posy ==1) {Pos = 3;}
-		if(Posx == 1 && Posy ==1) {Pos = 4;}
-		if(Posx == 2 && Posy ==1) {Pos = 5;}
-		if(Posx == 0 && Posy ==0) {Pos = 6;}
-		if(Posx == 1 && Posy ==0) {Pos = 7;}
-		if(Posx == 2 && Posy ==0) {Pos = 8;}
+		int Pos = 12; //permet de déf la position dans le bon format : x,y --> [0,8]
+		if(Posx == 0 && Posy ==2) Pos = 0;
+		if(Posx == 1 && Posy ==2) Pos = 1;
+		if(Posx == 2 && Posy ==2) Pos = 2;
+		if(Posx == 0 && Posy ==1) Pos = 3;
+		if(Posx == 1 && Posy ==1) Pos = 4;
+		if(Posx == 2 && Posy ==1) Pos = 5;
+		if(Posx == 0 && Posy ==0) Pos = 6;
+		if(Posx == 1 && Posy ==0) Pos = 7;
+		if(Posx == 2 && Posy ==0) Pos = 8;
 		
 		//verification cas par cas des paramètres Taille et couleur (=Player iD);
-		if(Size == 0 && PlayerId == 1) {Small[Pos].setIcon(SmallRed);}
-		if(Size == 1 && PlayerId == 1) {Medium[Pos].setIcon(MediumRed);}
-		if(Size == 2 && PlayerId == 1) {Big[Pos].setIcon(BigRed);}
-		if(Size == 0 && PlayerId == 2) {Small[Pos].setIcon(SmallBlue);}
-		if(Size == 1 && PlayerId == 2) {Medium[Pos].setIcon(MediumBlue);}
-		if(Size == 2 && PlayerId == 2) {Big[Pos].setIcon(BigBlue);}
+		if(Size == 0 && PlayerId == 1) Small[Pos].setIcon(SmallRed);
+		if(Size == 1 && PlayerId == 1) Medium[Pos].setIcon(MediumRed);
+		if(Size == 2 && PlayerId == 1) Big[Pos].setIcon(BigRed);
+		if(Size == 0 && PlayerId == 2) Small[Pos].setIcon(SmallBlue);
+		if(Size == 1 && PlayerId == 2) Medium[Pos].setIcon(MediumBlue);
+		if(Size == 2 && PlayerId == 2) Big[Pos].setIcon(BigBlue);
 		}
 	public void clear() {
 		for(int i = 0 ; i<9 ; i++) {
@@ -86,25 +86,3 @@ public class GUI {
 		}
 	}
 }
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	
-		
-		
-		
-		
-
-	
-	
-	
-
-
