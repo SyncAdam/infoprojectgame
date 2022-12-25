@@ -39,92 +39,171 @@ public static void main(String[]args){
 
     aff.clearOutputStream();
 
-    String userInput;
-    char size = 0;
+    //String userInput;
+    //char size = 0;
     int cp = 0;
+    int nt = 0; //nombre de tour;
     int t = -1;
     int[] coords = new int[2];
     int[][][] gameTable = new int[3][3][3];
-    int numplayers = gest.askNumPlayers();
     boolean gagne = false;
+    boolean veutjouer = true;
+    boolean contrepc = false;
+    char var;
+    char ans;
 
-    System.out.println("Creation des joueurs...");
-    Player[] Playertableau = gest.createPlayers(numplayers, false); //á changer
+    int numplayers;
+    Player[] Playertableau;
 
-    gameTable = gest.initialiseGameTable();
     aff.clearOutputStream();
 
-    // aff.writePlayerNamesWithColors(numplayers, Playertableau);
-    // for(int i = 0; i < numplayers; i++){
-    //     aff.writePlayerTab(Playertableau[i]);
-    // }
-
-    while(!gagne){
-
-        if(cp == numplayers) cp = 0;
-
-        aff.printGameTable(gameTable);
-
-        aff.writePlayerTab(Playertableau[cp]);
-
-        System.out.println("Place un pion " + Playertableau[cp].name);
-
-
-        userInput = Lire.S();
-        String[] splitted = userInput.split(" ", 3);
-
-        boolean goodInput = false;
-
-        try{
-            coords[0] = Integer.parseInt(splitted[0]);
-            coords[1] = Integer.parseInt(splitted[1]);
-            size = splitted[2].charAt(0);
-            t = gest.convertSize(size);
-            goodInput = true;
+    //
+    gameTable = gest.initialiseGameTable();
+    numplayers = gest.askNumPlayers();
+    if(numplayers == 2){
+        System.out.println("Est-ce que vous voulez jouer contre l'ordinateur? O ou N");
+        ans = Lire.c();
+        while(ans != 'o' && ans != 'O' && ans != 'n' && ans != 'N'){
+            System.out.println("Entrez O ou N");
+            ans = Lire.c();
         }
-        catch (NumberFormatException | ArrayIndexOutOfBoundsException | mPE | StringIndexOutOfBoundsException ex){
-            //ex.printStackTrace();
-            System.out.println("Reessayez");
+        if(ans == 'o' || ans == 'O'){
+            contrepc = true;
         }
-
-        while(!goodInput){
-            
-            userInput = Lire.S();
-            splitted = userInput.split(" ", 3);
-
-            try{
-                coords[0] = Integer.parseInt(splitted[0]);
-                coords[1] = Integer.parseInt(splitted[1]);
-                size = splitted[2].charAt(0);
-                t = gest.convertSize(size);
-                goodInput = true;
-            }
-            catch (NumberFormatException | ArrayIndexOutOfBoundsException | mPE | StringIndexOutOfBoundsException ex){
-                //ex.printStackTrace();
-                System.out.println("Reessayez");
-            }
-        }
-
-        aff.clearOutputStream();      
- 
-        if(gest.hasElement(Playertableau, cp, t)){
-            try{
-                gameTable = gest.placeElement(gameTable, Playertableau, cp, t, coords);
-                screen.placePawn(coords[0]-1, coords[1]-1, t, Playertableau[cp].playercircles[0][0]);
-                if(fonction.check(gameTable, Playertableau[cp].playercircles[0][0]) != 0){
-                    gagne = true;
-                    aff.printTrophy();
-                    continue;
-                }
-                cp++;
-            }
-            catch(mPE e){
-                e.printStackTrace();
-            }
-
-        }
-
     }
+    Playertableau = gest.createPlayers(numplayers, contrepc);
+    System.out.println("Creation des joueurs...");
+    aff.clearOutputStream();
+    //
+
+    while(veutjouer){
+
+        while(!gagne){
+
+            if(cp == numplayers) cp = 0;
+
+            aff.printGameTable(gameTable);
+
+            aff.writePlayerTab(Playertableau[cp]);
+            //String[] splitted;
+
+            //boolean goodInput = false;
+
+            if(Playertableau[cp].isRobot != true){
+
+                /*
+
+                System.out.println("Place un pion " + Playertableau[cp].name);
+                userInput = Lire.S();
+                splitted = userInput.split(" ", 3);
+
+                try{
+                    coords[0] = Integer.parseInt(splitted[0]); //(int)splitted[0];
+                    coords[1] = Integer.parseInt(splitted[1]);
+                    size = splitted[2].charAt(0);
+                    t = gest.convertSize(size);
+                    goodInput = true;
+                }
+                catch (NumberFormatException | ArrayIndexOutOfBoundsException | mPE | StringIndexOutOfBoundsException ex){
+                    //ex.printStackTrace();
+                    System.out.println("Reessayez");
+                }
+    
+                while(!goodInput){
+                    
+                    userInput = Lire.S();
+                    splitted = userInput.split(" ", 3);
+    
+                    try{
+                        coords[0] = Integer.parseInt(splitted[0]);
+                        coords[1] = Integer.parseInt(splitted[1]);
+                        size = splitted[2].charAt(0);
+                        t = gest.convertSize(size);
+                        goodInput = true;
+                    }
+                    catch (NumberFormatException | ArrayIndexOutOfBoundsException | mPE | StringIndexOutOfBoundsException ex){
+                        //ex.printStackTrace();
+                        System.out.println("Reessayez");
+                    }
+                }*/
+
+                screen.tryPawn(cp, Playertableau);
+                coords[0] = screen.getLastX();
+                coords[1] = screen.getLastY();
+                t = screen.getLastSize();
+                
+
+            }
+            else{
+
+                coords[0] = (int)Math.ceil(Math.random()*3);
+                coords[1] = (int)Math.ceil(Math.random()*3);
+                t = (int)(Math.ceil(Math.random()*3)-1);
+
+            }
+
+            //aff.clearOutputStream();
+    
+            if(gest.hasElement(Playertableau[cp], t) && nt != (numplayers*9)-1){
+                try{
+                    gameTable = gest.placeElement(gameTable, Playertableau[cp], t, coords);
+                    screen.clear();
+                    screen.refreshScreen(gameTable);
+                    if(fonction.check(gameTable, Playertableau[cp].playercircles[0][0]) != 0){
+                        gagne = true;
+                        aff.printTrophy();
+                    }
+                    cp++;
+                    nt++;
+                }
+                catch(mPE e){
+                    e.printStackTrace();
+                }
+
+            }
+            else{
+                gagne = true;
+                System.out.println("Personne n'a gagné");
+            }
+
+        }
+
+        System.out.println("Est-ce que vous voulez rejouer? O ou N");
+        var = Lire.c();
+        while(var != 'o' && var != 'O' && var != 'n' && var != 'N'){
+            System.out.println("Entrez O ou N");
+            var = Lire.c();
+        }
+        if(var == 'o' || var == 'O'){
+            aff.clearOutputStream();
+            numplayers = gest.askNumPlayers();
+            if(numplayers == 2){
+                System.out.println("Est-ce que vous voulez jouer contre l'ordinateur? O ou N");
+                ans = Lire.c();
+                while(ans != 'o' && ans != 'O' && ans != 'n' && ans != 'N'){
+                    System.out.println("Entrez O ou N");
+                    ans = Lire.c();
+                }
+                if(ans == 'o' || ans == 'O'){
+                    contrepc = true;
+                }
+            }
+            gameTable = gest.initialiseGameTable();
+            Playertableau = gest.createPlayers(numplayers, contrepc);
+            System.out.println("Creation des joueurs...");
+            gagne = false;
+            cp = 0;
+            nt = 0;
+            screen.clear();
+        }
+        else{
+            aff.clearOutputStream();
+            veutjouer = false;
+        }
+        
+    }
+
+    System.exit(0);
 
 }
 

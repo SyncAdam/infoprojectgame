@@ -4,6 +4,10 @@ package Game;
 
 public class gest {
 
+    //
+    // Thibault
+    //
+
     //fonction pour demander le nombre de joueurs
     public static int askNumPlayers(){
 
@@ -24,6 +28,8 @@ public class gest {
 
         return num;
     }
+
+    
 
     //Creer les jouers
     public static Player[] createPlayers(int num, boolean contrepc){
@@ -69,7 +75,6 @@ public class gest {
         }
         return p;
     }
-
     
     //fonction pour initialiser le tableau du jeu
     public static int[][][] initialiseGameTable(){
@@ -107,7 +112,7 @@ public class gest {
                 t = 2;
             break;
             case 'G':
-                t = 2;
+                t = 2; 
             break;
             default:
                 throw new mPE("Taille inconnue");
@@ -115,8 +120,9 @@ public class gest {
         return t;
     }
 
-    public static boolean hasElement(Player[] P, int p, int t){
-        if(P[p].playercircles[t][1] == 0){
+    public static boolean hasElement(Player P, int t){
+        if(P.playercircles[t][1] == 0){
+            System.out.println("Vous n'avez plus de pion de cette taille");
             return false;
         }
         else{
@@ -126,19 +132,19 @@ public class gest {
 
 
     //Placer un pion
-    public static int[][][] placeElement(int[][][] M, Player[] Players, int n, int t, int[] coord) throws mPE{
+    public static int[][][] placeElement(int[][][] M, Player Player, int t, int[] coord) throws mPE{
 
         int[][][] X = M;
 
         if(X[coord[0]-1][coord[1]-1][t] == 0){
 
-            X[coord[0]-1][coord[1]-1][t] = Players[n].playercircles[0][0];
-            Players[n].playercircles[t][1] -= 1;
+            X[coord[0]-1][coord[1]-1][t] = Player.playercircles[0][0];
+            Player.playercircles[t][1] -= 1;
 
         }
         else{
             throw new mPE("Impossible de placer un pion");
-        }            
+        }
     return X;        
 
     }  

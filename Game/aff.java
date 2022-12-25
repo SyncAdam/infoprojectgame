@@ -15,25 +15,15 @@ public class aff {
 
 
     //Methode pour afficher le tableau du jeu sur l'ecran
-    public static void printGameTable(int[][][]gameTable){
+    public static void printGameTable(int[][][]g){
 
         for(int i = 2; i >= 0; i--){
 
             System.out.print("\n\n");
-            printGameTableLine(gameTable,i);
+            printGameTableLine(g,i);
 
         }
         System.out.print("\n\n");
-
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
-                for(int k = 0; k < 3; k++){
-                    System.out.print(gameTable[k][j][i] + ""); 
-                }
-                System.out.print("\n");
-            }
-            System.out.print("\n");      
-        }
 
     }
 

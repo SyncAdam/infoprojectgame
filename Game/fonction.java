@@ -56,7 +56,7 @@ public class fonction {
         */
 
         if (result != 0){System.out.println("Bravo au joueur "+ player + " qui remporte la manche");}
-        else {System.out.println("Pas de gagnant");}
+        //else {System.out.println("Pas de gagnant");}
         return result;
     }
 }

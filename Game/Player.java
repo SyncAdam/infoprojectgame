@@ -1,7 +1,7 @@
 package Game;
 public class Player{
 
-    String name;
+    public String name;
     String color;                               
     int[][] playercircles = new int[3][2];
     boolean isRobot;                               
