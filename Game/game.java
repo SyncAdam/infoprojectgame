@@ -175,8 +175,10 @@ public static void main(String[]args){
             var = Lire.c();
         }
         if(var == 'o' || var == 'O'){
+            screen.clear();
             aff.clearOutputStream();
             numplayers = gest.askNumPlayers();
+            contrepc = false;
             if(numplayers == 2){
                 System.out.println("Est-ce que vous voulez jouer contre l'ordinateur? O ou N");
                 ans = Lire.c();
@@ -194,7 +196,6 @@ public static void main(String[]args){
             gagne = false;
             cp = 0;
             nt = 0;
-            screen.clear();
         }
         else{
             aff.clearOutputStream();
