@@ -339,18 +339,18 @@ public class GUI {
 						else if(k == 1 && j == 2) CurPos = 1;
 						else if(k == 2 && j == 2) CurPos = 2;
 
-						if(i == 1 && G[k][j][i] == 0) Medium[CurPos].setIcon(MediumRed);
-						if(i == 0 && G[k][j][i] == 0) Small[CurPos].setIcon(SmallRed);
-						if(i == 2 && G[k][j][i] == 0) Big[CurPos].setIcon(BigRed);
-						if(i == 0 && G[k][j][i] == 1) Small[CurPos].setIcon(SmallBlue);
-						if(i == 1 && G[k][j][i] == 1) Medium[CurPos].setIcon(MediumBlue);
-						if(i == 2 && G[k][j][i] == 1) Big[CurPos].setIcon(BigBlue);
-						if(i == 0 && G[k][j][i] == 2) Small[CurPos].setIcon(SmallPink);
-						if(i == 1 && G[k][j][i] == 2) Medium[CurPos].setIcon(MediumPink);
-						if(i == 2 && G[k][j][i] == 2) Big[CurPos].setIcon(BigPink);
-						if(i == 0 && G[k][j][i] == 3) Small[CurPos].setIcon(SmallBlack);
-						if(i == 1 && G[k][j][i] == 3) Medium[CurPos].setIcon(MediumBlack);
-						if(i == 2 && G[k][j][i] == 3) Big[CurPos].setIcon(BigBlack);
+						if(i == 1 && G[k][j][i] == 1) Medium[CurPos].setIcon(MediumRed);
+						if(i == 0 && G[k][j][i] == 1) Small[CurPos].setIcon(SmallRed);
+						if(i == 2 && G[k][j][i] == 1) Big[CurPos].setIcon(BigRed);
+						if(i == 0 && G[k][j][i] == 2) Small[CurPos].setIcon(SmallBlue);
+						if(i == 1 && G[k][j][i] == 2) Medium[CurPos].setIcon(MediumBlue);
+						if(i == 2 && G[k][j][i] == 2) Big[CurPos].setIcon(BigBlue);
+						if(i == 0 && G[k][j][i] == 3) Small[CurPos].setIcon(SmallPink);
+						if(i == 1 && G[k][j][i] == 3) Medium[CurPos].setIcon(MediumPink);
+						if(i == 2 && G[k][j][i] == 3) Big[CurPos].setIcon(BigPink);
+						if(i == 0 && G[k][j][i] == 4) Small[CurPos].setIcon(SmallBlack);
+						if(i == 1 && G[k][j][i] == 4) Medium[CurPos].setIcon(MediumBlack);
+						if(i == 2 && G[k][j][i] == 4) Big[CurPos].setIcon(BigBlack);
 
 					}
 				}
