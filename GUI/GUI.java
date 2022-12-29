@@ -10,22 +10,33 @@ package GUI;
  * name.getLastX() // retourne la coordonnée en X du dernier pion joué sous forme d'un int
  * name.getLastY() // retourne la coordonnée en X du dernier pion joué sous forme d'un int
  * 
+ * name.getPlayerNumber() // retourne nombre joueurs selectionnés
+ * name.gameIsStarted() // retourne true or false si le joueur a cliqué ou non sur le bouton start
+ * name.getPlayerName(int PlayerId) // retourne le nom du joueur sous forme d'un STRING (id entre 1 et 4 inclus)
+ * NOTE : Quand le joueur clique sur start cela créer automatiquement un nouveau tableau de jeu
+ * 
+ * 
  */
 
 import java.awt.Color;
+//import java.awt.Dimension;
 import java.awt.GridLayout;
+//import java.nio.channels.ClosedByInterruptException;
 //import java.awt.Dimension;
 import java.awt.Font;
 //import java.awt.event.*;
 import Game.Player;
+import java.util.concurrent.TimeUnit;
 
 //import javax.lang.model.util.SimpleElementVisitor14;
 
 //import java.awt.Color;
 
 import javax.swing.*;
+//import javax.swing.plaf.DimensionUIResource;
 
 public class GUI {
+	
 	//création des images : 
 	ImageIcon BigRed = new ImageIcon("GUI/Pictures/BigRed.png");
 	ImageIcon MediumRed = new ImageIcon("GUI/Pictures/MediumRed.png");
@@ -58,12 +69,121 @@ public class GUI {
 	JPanel Infos = new JPanel(); // creation du conteneur pour le label qui affiche le texte
 	JPanel panelChoixTaille = new JPanel();
 
+	//Création des éléments de la fenetre de démarage :
+	JFrame start = new JFrame("Start");
+	JFrame Home = new JFrame("Otrio");
+	JPanel namePanel = new JPanel(); // Création de tous les élements de la fenetre de démarage 
+	JPanel numberPanel = new JPanel(); //panel qui contient les radio box
+	JLabel welcomeTxt = new JLabel("Welcome to Otrio");
+	JLabel numberTxt = new JLabel("How many players ?");
+	JLabel nameTxt = new JLabel("Names ?");
+	// JRadioButton[] numberRadioButton = new JRadioButton[4];   //fonctionnerait avec la boucle for écrite en commentaire plus bas, mais ne fonctionne pas pour une raison inconnue, je obligé de délarer les boutons 1 par 1
+	JRadioButton numberRadioButton1 = new JRadioButton("1 Player");
+	JRadioButton numberRadioButton2 = new JRadioButton("2 Player");
+	JRadioButton numberRadioButton3 = new JRadioButton("3 Player");
+	JRadioButton numberRadioButton4 = new JRadioButton("4 Player");
+	ButtonGroup group2 = new ButtonGroup(); // groupe qui permet de faire en sorte que l'on puisse selectionner qu'un seul nb de joueur à la fois
+	
+	JButton startButton = new JButton("Start");
+
+	JTextField namePlayerField1 = new JTextField();//champs de texte pour les pseudosd
+	JTextField namePlayerField2 = new JTextField();
+	JTextField namePlayerField3 = new JTextField();
+	JTextField namePlayerField4 = new JTextField();
+	//String numberRadioButtonString = "";
+	public boolean againstPC = false;
+
+
 	public GUI() {}
 	int i ;
+	public boolean startButtonState ;
+	public int PlayerNumber =2; //2 car plus bas on dit que la valeure selectionnée par défaut est 2.
+		
+	public void startWindow (){
+		//création des éléments de la fenetre de démarrage :
+		
+		start.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //permet d'arreter le prog en cliquant sur la croix
+		start.setSize(450,450); 
+		start.setResizable(false); // taille = fixe
+		start.setLayout(null);// permet de placer les conteneurs librement sur la fenetre
+		start.getContentPane().setBackground(Color.white); // couleur du fond
+		start.setVisible(true);	
+
+		welcomeTxt.setHorizontalAlignment(SwingConstants.CENTER);
+		welcomeTxt.setFont(new Font("Arial",Font.PLAIN,20));
+
+		start.setLayout(null); // on ajoute et dimmensionne les label dans les Panel
+		namePanel.setBounds(200, 50, 200, 300); //on place les 2 conteneur principaux et on définit leur layout comme grille à une colonne pour pouvoir empiler les éléments
+		namePanel.setLayout(new GridLayout(5,1) );
+		namePanel.setBackground(Color.white);
+		numberPanel.setBackground(Color.white);
+		numberPanel.setBounds(0, 50, 200, 300);
+		numberPanel.setLayout(new GridLayout(5,1) );
+		
+
+
+			/*for (i=0 ; i < 4 ; i++){
+			numberRadioButton[i] = new JRadioButton();
+			numberRadioButtonString = (i+1 + " Player"); // on actualise la variable qui conteient le nom du bouton
+
+			numberRadioButton[i].setText(numberRadioButtonString);
+			numberPanel.add(numberRadioButton[i]);
+			}*/
+
+			// Ajout des boutons dans le bon panel : 
+			//IMPOSSIBLE d'utiliser la boucle ci-dessus pour les créer et ajouter les boutons dans le panel : a chaque lancement j'obtiens une fenetre différente !!!!
+//			group2.add(numberRadioButton1);
+			group2.add(numberRadioButton2);
+			group2.add(numberRadioButton3);
+			group2.add(numberRadioButton4);
+			numberRadioButton2.setSelected(true);
+			
+			namePanel.add(nameTxt);
+			
+			numberPanel.add(numberTxt);
+//			numberPanel.add(numberRadioButton1);
+			numberPanel.add(numberRadioButton2);
+			numberPanel.add(numberRadioButton3);
+			numberPanel.add(numberRadioButton4);
+
+			namePanel.add(namePlayerField1);
+			namePanel.add(namePlayerField2);
+			namePanel.add(namePlayerField3);
+			namePanel.add(namePlayerField4);
+			
+
+
+			/*namePlayerField[i] = new JTextField();
+			namePlayerField[i].setPreferredSize(new Dimension(40,10));
+			namePanel.add(namePlayerField[i]);
+			System.out.println(i + "ok ");*/
+			
+	
+
+
+		startButton.setBounds(250, 350, 100, 50);
+		start.add(startButton);
+		start.add(welcomeTxt);
+		welcomeTxt.setBounds(0,0,400,50);
+		start.add(numberPanel);
+		start.add(namePanel);
+
+
+//		numberRadioButton1.addActionListener(e -> PlayerNumber = 1);
+		numberRadioButton2.addActionListener(e -> PlayerNumber = 2);
+		numberRadioButton3.addActionListener(e -> PlayerNumber = 3);
+		numberRadioButton4.addActionListener(e -> PlayerNumber = 4);
+
+		//while(startButtonState == false) {
+			startButton.addActionListener(e -> startButtonAction());
+			
+		//}
+
+	}
+
 	
 	public void create() {
 		
-	    JFrame Home = new JFrame("Otrio");
 		Home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //permet d'arreter le prog en cliquant sur la croix
 		Home.setSize(800,400); // défini la taille de la fenetre à un carré de 100px de moins que la hauteur de l'écran
 		Home.setResizable(false); // taille = fixe
@@ -138,7 +258,7 @@ public class GUI {
 	}
 					//=======================================================
 	int Pos = 10 ;	//Pourquoi c'est la? Je mettrais plustot en haut avec les autres variables
-	int Size ; 		//=======================================================
+	int Size; 		//=======================================================
 
 
 	//=======================================================
@@ -150,7 +270,8 @@ public class GUI {
 		System.out.println("Tout début place pawn, Pos ="+ Pos);
 			
 		labelInfos.setText("Place un pion " + P[PlayerId].name); //affiche l'instruction dans le label d'info
-		smallSize.setSelected(true); //o car par défaut c'est "small ring" qui est coché
+		smallSize.setSelected(true);
+		Size =0; //o car par défaut c'est "small ring" qui est coché
 		//Size =0; // on le reprécise au cas ou le joueur garde small size selectionné
 		
 		while (Pos ==10){  //Tant qu'un bouton du plateau n'a pas été cliqué on reste dans la boucle
@@ -269,7 +390,100 @@ public class GUI {
 		return Size;
 	}
 
+	public String getPlayerName (int Player) {
+		String name ="";
+		switch(Player) { 
+			case 0 : 
+			name = namePlayerField1.getText();
+			break;
+			case 1 : 
+			name = namePlayerField2.getText();
+			break;
+			case 2 : 
+			name = namePlayerField3.getText();
+			break;
+			case 3 : 
+			name = namePlayerField4.getText();
+			break;
+
+		}
+		
+		return name;
+	}
 	
+	private void startButtonAction(){
+		
+		System.out.println("Début de la partie");
+
+		if(PlayerNumber == 2){
+			Object[] options = {"Yes", "No"};
+			int n = JOptionPane.showOptionDialog(start,
+    			"Would you like to play against the computer?",
+				"Against computer?",
+    			JOptionPane.YES_NO_OPTION,
+    			JOptionPane.QUESTION_MESSAGE,
+    			null,     //do not use a custom Icon
+    			options,  //the titles of buttons
+    			options[0]); //default button title
+				while(n != JOptionPane.YES_OPTION && n != JOptionPane.NO_OPTION){
+				}
+			if(n == JOptionPane.YES_OPTION){
+				againstPC = true;
+			}
+		}
 	
+		start.dispose(); //ferme la fenetre quand on a cliqué sur start
+		create();
+		startButtonState = true;
+
+	}
+
+	public void noOneWon(){
+		JOptionPane.showMessageDialog(start, "Unfortunately nobody won");
+		Home.dispose();
+
+	}
+
+	public void gameWon(String name){
+		JOptionPane.showMessageDialog(start, "Congratulations to " + name + " who won the game!");
+		Home.dispose();
+	}
+
+	public boolean askReplay(){
+		Object[] options = {"Yes", "No"};
+			int n = JOptionPane.showOptionDialog(start,
+    			"Would you like to replay?",
+				"Replay?",
+    			JOptionPane.YES_NO_OPTION,
+    			JOptionPane.QUESTION_MESSAGE,
+    			null,     //do not use a custom Icon
+    			options,  //the titles of buttons
+    			options[0]); //default button title
+				while(n != JOptionPane.YES_OPTION && n != JOptionPane.NO_OPTION){
+					try{
+						TimeUnit.MILLISECONDS.sleep(5);
+					}
+					catch(InterruptedException e){
+						e.printStackTrace();
+					}
+				}
+				if(n == JOptionPane.YES_OPTION){
+					return true;
+				}
+				else{
+					return false;
+				}
+			
+	}
+
+
+	public int getPlayerNumber(){ //fonction qui retourne le nombre de joueur sélectionné
+
+		return PlayerNumber;
+	}
+
+	public boolean gameIsStarted(){
+		return startButtonState;
+	}
 	
 }

@@ -1,4 +1,5 @@
 package Game;
+import GUI.GUI;
 
 //Class pour les fonctions du gestion du jeu
 
@@ -32,7 +33,7 @@ public class gest {
     
 
     //Creer les jouers
-    public static Player[] createPlayers(int num, boolean contrepc){
+    public static Player[] createPlayers(int num, boolean contrepc, GUI gui){
         int i;
         Player[] p = new Player[num];
     
@@ -42,7 +43,7 @@ public class gest {
 
             if(!contrepc || i != num-1){
     
-            System.out.print("Donnez le nom du " + (i+1) + "ieme joueur: ");
+            /*System.out.print("Donnez le nom du " + (i+1) + "ieme joueur: ");
             p[i].name = Lire.S();
             System.out.print("\n");
     
@@ -52,9 +53,9 @@ public class gest {
                 p[i].name = Lire.S();
                 System.out.print("\n");
     
-            }
+            }*/
     
-            System.out.print("Donnez le couleur du " + (i+1) + "ieme joueur: ");
+            /*System.out.print("Donnez le couleur du " + (i+1) + "ieme joueur: ");
             p[i].color = Lire.S();
             System.out.print("\n");
     
@@ -65,6 +66,16 @@ public class gest {
                 System.out.print("\n");
                 
             }
+            */
+            String name = gui.getPlayerName(i);
+            if(name.equals("")){
+                p[i].name = ("Player " + (i+1));
+            }
+            else{
+                p[i].name = name;
+            }
+            
+
             }
             else{
                 p[i].name = "ROBOT";

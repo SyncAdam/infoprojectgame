@@ -27,6 +27,7 @@
  */
 package Game;
 import GUI.GUI;
+import java.util.concurrent.TimeUnit;
 
 public class game{ 
 
@@ -35,7 +36,7 @@ public class game{
 public static void main(String[]args){
 
     GUI screen = new GUI();
-    screen.create();
+        screen.startWindow();
 
     aff.clearOutputStream();
 
@@ -52,29 +53,29 @@ public static void main(String[]args){
     char var;
     char ans;
 
-    int numplayers;
+    int numplayers = 0;
     Player[] Playertableau;
 
     aff.clearOutputStream();
 
     //
     gameTable = gest.initialiseGameTable();
-    numplayers = gest.askNumPlayers();
-    if(numplayers == 2){
-        System.out.println("Est-ce que vous voulez jouer contre l'ordinateur? O ou N");
-        ans = Lire.c();
-        while(ans != 'o' && ans != 'O' && ans != 'n' && ans != 'N'){
-            System.out.println("Entrez O ou N");
-            ans = Lire.c();
+    while(screen.startButtonState == false){
+        System.out.println("Im not ready yet.");
+        try{
+            TimeUnit.MILLISECONDS.sleep(50);
         }
-        if(ans == 'o' || ans == 'O'){
-            contrepc = true;
+        catch(InterruptedException e){
+            e.printStackTrace();
         }
     }
-    Playertableau = gest.createPlayers(numplayers, contrepc);
+    numplayers = screen.PlayerNumber;
+    contrepc = screen.againstPC;
+    System.out.println("Done.");
+
+    Playertableau = gest.createPlayers(numplayers, contrepc, screen);
     System.out.println("Creation des joueurs...");
-    aff.clearOutputStream();
-    //
+    //aff.clearOutputStream();
 
     while(veutjouer){
 
@@ -147,11 +148,12 @@ public static void main(String[]args){
             if(gest.hasElement(Playertableau[cp], t) && nt != (numplayers*9)-1){
                 try{
                     gameTable = gest.placeElement(gameTable, Playertableau[cp], t, coords);
-                    screen.clear();
+                        screen.clear();
                     screen.refreshScreen(gameTable);
                     if(fonction.check(gameTable, Playertableau[cp].playercircles[0][0]) != 0){
                         gagne = true;
                         aff.printTrophy();
+                        screen.gameWon(Playertableau[cp].name);
                     }
                     cp++;
                     nt++;
@@ -161,24 +163,52 @@ public static void main(String[]args){
                 }
 
             }
+            else if(!gest.hasElement(Playertableau[cp], t)) continue; 
             else{
                 gagne = true;
                 System.out.println("Personne n'a gagné");
+                screen.noOneWon();
+            }
+            try{
+                TimeUnit.MILLISECONDS.sleep(50);
+            }
+            catch(InterruptedException e){
+                e.printStackTrace();
             }
 
         }
-
+        /*
+        screen.askReplay();
         System.out.println("Est-ce que vous voulez rejouer? O ou N");
         var = Lire.c();
         while(var != 'o' && var != 'O' && var != 'n' && var != 'N'){
             System.out.println("Entrez O ou N");
             var = Lire.c();
         }
-        if(var == 'o' || var == 'O'){
-            screen.clear();
+        */
+
+        screen = null;
+        System.gc();
+        screen = new GUI();
+
+
+        if(screen.askReplay()){
+            screen.startWindow();
             aff.clearOutputStream();
-            numplayers = gest.askNumPlayers();
-            contrepc = false;
+
+            gameTable = gest.initialiseGameTable();
+            while(screen.startButtonState == false){
+                System.out.println("Im not ready yet.");
+                try{
+                    TimeUnit.MILLISECONDS.sleep(50);
+                }
+                catch(InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+            numplayers = screen.PlayerNumber;
+            contrepc = screen.againstPC;
+            /* 
             if(numplayers == 2){
                 System.out.println("Est-ce que vous voulez jouer contre l'ordinateur? O ou N");
                 ans = Lire.c();
@@ -190,10 +220,11 @@ public static void main(String[]args){
                     contrepc = true;
                 }
             }
-            gameTable = gest.initialiseGameTable();
-            Playertableau = gest.createPlayers(numplayers, contrepc);
+            */
+            Playertableau = gest.createPlayers(numplayers, contrepc, screen);
             System.out.println("Creation des joueurs...");
             gagne = false;
+            contrepc = false;
             cp = 0;
             nt = 0;
         }
