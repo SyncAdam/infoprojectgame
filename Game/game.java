@@ -61,7 +61,6 @@ public static void main(String[]args){
     //
     gameTable = gest.initialiseGameTable();
     while(screen.startButtonState == false){
-        System.out.println("Im not ready yet.");
         try{
             TimeUnit.MILLISECONDS.sleep(50);
         }
@@ -198,7 +197,6 @@ public static void main(String[]args){
 
             gameTable = gest.initialiseGameTable();
             while(screen.startButtonState == false){
-                System.out.println("Im not ready yet.");
                 try{
                     TimeUnit.MILLISECONDS.sleep(50);
                 }
