@@ -39,10 +39,10 @@ public class GUI {
 	
 	//création des images : 
 	ImageIcon BigRed = new ImageIcon("src/GUI/Pictures/BigRed.png");
-	ImageIcon MediumRed = new ImageIcon("src/GUI/Pictures/MediumRed.png");
-	ImageIcon SmallRed = new ImageIcon("src/GUI/Pictures/SmallRed.png");
-	ImageIcon BigBlue = new ImageIcon("src/GUI/Pictures/BigBlue.png");
-	ImageIcon MediumBlue = new ImageIcon("src/GUI/Pictures/MediumBlue.png");
+	ImageIcon MediumRed = new ImageIcon("src/GUI/Pictures/MediumRed.png");				//====================================
+	ImageIcon SmallRed = new ImageIcon("src/GUI/Pictures/SmallRed.png");				//Il y a rien qui s'affiche sur le .jar a cause de ca
+	ImageIcon BigBlue = new ImageIcon("src/GUI/Pictures/BigBlue.png");				//Solution éventuelle : enlever src/
+	ImageIcon MediumBlue = new ImageIcon("src/GUI/Pictures/MediumBlue.png");			//====================================
 	ImageIcon SmallBlue = new ImageIcon("src/GUI/Pictures/SmallBlue.png");
 	ImageIcon BigPink = new ImageIcon("src/GUI/Pictures/BigPink.png");
 	ImageIcon MediumPink = new ImageIcon("src/GUI/Pictures/MediumPink.png");
