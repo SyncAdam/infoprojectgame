@@ -82,23 +82,11 @@ public class aff {
         
         }
     }
- 
-    //Afficher le nom des jouers avec leurs couleurs    
-    public static void writePlayerNamesWithColors(int num, Player[] p){
-
-        for(int i = 0; i < num; i++){
-    
-            System.out.println((p[i].name) + "  ->  " + p[i].color);
-    
-        }
-    }
-
 
     //Afficher jouers avec nombre de pions
     public static void writePlayerTab(Player p){
 
         System.out.println("Nom de Joueur: " + p.name);
-        System.out.println("Couleur de Joueur: " + p.color);
         System.out.println("ident. | quant. |     taille ");
     
         for(int i = 0; i < 3; i++){

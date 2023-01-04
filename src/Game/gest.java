@@ -33,56 +33,77 @@ public class gest {
     
 
     //Creer les jouers
-    public static Player[] createPlayers(int num, boolean contrepc, GUI gui){
+    public static Player[] createPlayers(int num, boolean contrepc, GUI gui, boolean moreColors){
         int i;
         Player[] p = new Player[num];
+
+
     
         for(i = 0; i < num; i++){
 
             p[i] = new Player(i);
 
-            if(!contrepc || i != num-1){
+            if((!contrepc || i != num-1) && !moreColors){
     
-            /*System.out.print("Donnez le nom du " + (i+1) + "ieme joueur: ");
-            p[i].name = Lire.S();
-            System.out.print("\n");
-    
-            while(p[i].name == ""){
-    
-                System.out.print("Donnez un nom non nul pour le " + (i+1) + "ieme joueur: ");
+                /*System.out.print("Donnez le nom du " + (i+1) + "ieme joueur: ");
                 p[i].name = Lire.S();
                 System.out.print("\n");
-    
-            }*/
-    
-            /*System.out.print("Donnez le couleur du " + (i+1) + "ieme joueur: ");
-            p[i].color = Lire.S();
-            System.out.print("\n");
-    
-            while(p[i].color == ""){
-    
-                System.out.print("Donnez un couleur non nul pour le " + (i+1) + "ieme joueur: ");
+        
+                while(p[i].name == ""){
+        
+                    System.out.print("Donnez un nom non nul pour le " + (i+1) + "ieme joueur: ");
+                    p[i].name = Lire.S();
+                    System.out.print("\n");
+        
+                }*/
+        
+                /*System.out.print("Donnez le couleur du " + (i+1) + "ieme joueur: ");
                 p[i].color = Lire.S();
                 System.out.print("\n");
-                
-            }
-            */
-            String name = gui.getPlayerName(i);
-            if(name.equals("")){
-                p[i].name = ("Player " + (i+1));
-            }
-            else{
-                p[i].name = name;
-            }
-            
+        
+                while(p[i].color == ""){
+        
+                    System.out.print("Donnez un couleur non nul pour le " + (i+1) + "ieme joueur: ");
+                    p[i].color = Lire.S();
+                    System.out.print("\n");
+                    
+                }
+                */
+                String name = gui.getPlayerName(i);
+                if(name.equals("")){
+                    p[i].name = ("Player " + (i+1));
+                }
+                else{
+                    p[i].name = name;
+                }
 
             }
-            else{
+
+            else if(!moreColors){
                 p[i].name = "ROBOT";
-                p[i].color = "Black";
                 p[i].isRobot = true;
             }
     
+        }
+        if(moreColors){
+            String name = gui.getPlayerName(0);
+            if(name.equals("")){
+                p[0].name = ("Player " + (1));
+                p[1].name = ("Player " + (1));
+            }
+            else{
+                p[0].name = name;
+                p[1].name = name;
+            }
+            name = gui.getPlayerName(1);
+            if(name.equals("")){
+                p[2].name = ("Player " + (2));
+                p[3].name = ("Player " + (2));
+            }
+            else{
+                p[2].name = name;
+                p[3].name = name;
+            }
         }
         return p;
     }

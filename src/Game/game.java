@@ -26,8 +26,9 @@
  *		O	O	O
  */
 package Game;
-import GUI.GUI;
 import java.util.concurrent.TimeUnit;
+
+import GUI.GUI;
 
 public class game{ 
 
@@ -50,8 +51,7 @@ public static void main(String[]args){
     boolean gagne = false;
     boolean veutjouer = true;
     boolean contrepc = false;
-    char var;
-    char ans;
+    boolean moreColors = false;
 
     int numplayers = 0;
     Player[] Playertableau;
@@ -68,13 +68,20 @@ public static void main(String[]args){
             e.printStackTrace();
         }
     }
-    numplayers = screen.PlayerNumber;
+    numplayers = screen.getPlayerNumber();
     contrepc = screen.againstPC;
+    moreColors = screen.moreColors;
+
     System.out.println("Done.");
 
-    Playertableau = gest.createPlayers(numplayers, contrepc, screen);
+    Playertableau = gest.createPlayers(numplayers, contrepc, screen, moreColors);
     System.out.println("Creation des joueurs...");
     //aff.clearOutputStream();
+
+    screen.clear();
+    int cpw = cp+1;
+    if(cp+1 >= numplayers) cpw = 0;
+    screen.refreshScreen(gameTable, Playertableau, cpw);
 
     while(veutjouer){
 
@@ -83,6 +90,7 @@ public static void main(String[]args){
             if(cp == numplayers) cp = 0;
 
             aff.printGameTable(gameTable);
+
 
             aff.writePlayerTab(Playertableau[cp]);
             //String[] splitted;
@@ -147,8 +155,10 @@ public static void main(String[]args){
             if(gest.hasElement(Playertableau[cp], t) && nt != (numplayers*9)-1){
                 try{
                     gameTable = gest.placeElement(gameTable, Playertableau[cp], t, coords);
-                        screen.clear();
-                    screen.refreshScreen(gameTable);
+                    screen.clear();
+                    cpw = cp+1;
+                    if(cp+1 >= numplayers) cpw = 0;
+                    screen.refreshScreen(gameTable, Playertableau, cpw);
                     if(fonction.check(gameTable, Playertableau[cp].playercircles[0][0]) != 0){
                         gagne = true;
                         aff.printTrophy();
@@ -198,14 +208,15 @@ public static void main(String[]args){
             gameTable = gest.initialiseGameTable();
             while(screen.startButtonState == false){
                 try{
-                    TimeUnit.MILLISECONDS.sleep(50);
+                    TimeUnit.MILLISECONDS.sleep(20);
                 }
                 catch(InterruptedException e){
                     e.printStackTrace();
                 }
             }
-            numplayers = screen.PlayerNumber;
+            numplayers = screen.getPlayerNumber();
             contrepc = screen.againstPC;
+            moreColors = screen.moreColors;
             /* 
             if(numplayers == 2){
                 System.out.println("Est-ce que vous voulez jouer contre l'ordinateur? O ou N");
@@ -219,10 +230,11 @@ public static void main(String[]args){
                 }
             }
             */
-            Playertableau = gest.createPlayers(numplayers, contrepc, screen);
+            Playertableau = gest.createPlayers(numplayers, contrepc, screen, moreColors);
             System.out.println("Creation des joueurs...");
             gagne = false;
             contrepc = false;
+            moreColors = false;
             cp = 0;
             nt = 0;
         }
