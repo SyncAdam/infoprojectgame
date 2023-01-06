@@ -152,7 +152,7 @@ public static void main(String[]args){
 
             //aff.clearOutputStream();
     
-            if(gest.hasElement(Playertableau[cp], t) && nt != (numplayers*9)-1){
+            if(gest.hasElement(Playertableau[cp], t, screen) && nt != (numplayers*9)-1){
                 try{
                     gameTable = gest.placeElement(gameTable, Playertableau[cp], t, coords);
                     screen.clear();
@@ -169,10 +169,11 @@ public static void main(String[]args){
                 }
                 catch(mPE e){
                     e.printStackTrace();
+                    screen.setDisplayedText("You can't play here !");
                 }
 
             }
-            else if(!gest.hasElement(Playertableau[cp], t)) continue; 
+            else if(!gest.hasElement(Playertableau[cp], t, screen)) continue; 
             else{
                 gagne = true;
                 System.out.println("Personne n'a gagné");

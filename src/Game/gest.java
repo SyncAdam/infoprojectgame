@@ -152,9 +152,10 @@ public class gest {
         return t;
     }
 
-    public static boolean hasElement(Player P, int t){
+    public static boolean hasElement(Player P, int t, GUI s){
         if(P.playercircles[t][1] == 0){
             System.out.println("Vous n'avez plus de pion de cette taille");
+            s.setDisplayedText("You dont have any circles of this size.");
             return false;
         }
         else{

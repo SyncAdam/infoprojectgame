@@ -13,36 +13,30 @@ package GUI;
  * name.getPlayerNumber() // retourne nombre joueurs selectionnés
  * name.gameIsStarted() // retourne true or false si le joueur a cliqué ou non sur le bouton start
  * name.getPlayerName(int PlayerId) // retourne le nom du joueur sous forme d'un STRING (id entre 1 et 4 inclus)
+ * name.askReplay() //popup qui demande si on veut rejouer
+ * name.noOneWon() // popup qui dit que personne n'a gagné
+ * name.gameWon() //popup qui dit qu'un joueur a gagné 
  * NOTE : Quand le joueur clique sur start cela créer automatiquement un nouveau tableau de jeu
  * 
  * 
  */
 
-import java.awt.Color;
-//import java.awt.Dimension;
+import java.awt.Color; //Importation des biliothèques necessaires 
 import java.awt.GridLayout;
-//import java.nio.channels.ClosedByInterruptException;
-//import java.awt.Dimension;
 import java.awt.Font;
-//import java.awt.event.*;
 import Game.Player;
 import java.util.concurrent.TimeUnit;
-
-//import javax.lang.model.util.SimpleElementVisitor14;
-
-//import java.awt.Color;
-
 import javax.swing.*;
-//import javax.swing.plaf.DimensionUIResource;
+
 
 public class GUI {
 	
 	//création des images : 
 	ImageIcon BigRed = new ImageIcon("src/GUI/Pictures/BigRed.png");
-	ImageIcon MediumRed = new ImageIcon("src/GUI/Pictures/MediumRed.png");				//====================================
-	ImageIcon SmallRed = new ImageIcon("src/GUI/Pictures/SmallRed.png");				//Il y a rien qui s'affiche sur le .jar a cause de ca
-	ImageIcon BigBlue = new ImageIcon("src/GUI/Pictures/BigBlue.png");				//Solution éventuelle : enlever src/
-	ImageIcon MediumBlue = new ImageIcon("src/GUI/Pictures/MediumBlue.png");			//====================================
+	ImageIcon MediumRed = new ImageIcon("src/GUI/Pictures/MediumRed.png");		
+	ImageIcon SmallRed = new ImageIcon("src/GUI/Pictures/SmallRed.png");				
+	ImageIcon BigBlue = new ImageIcon("src/GUI/Pictures/BigBlue.png");
+	ImageIcon MediumBlue = new ImageIcon("src/GUI/Pictures/MediumBlue.png");	
 	ImageIcon SmallBlue = new ImageIcon("src/GUI/Pictures/SmallBlue.png");
 	ImageIcon BigPink = new ImageIcon("src/GUI/Pictures/BigPink.png");
 	ImageIcon MediumPink = new ImageIcon("src/GUI/Pictures/MediumPink.png");
@@ -51,36 +45,37 @@ public class GUI {
 	ImageIcon MediumBlack = new ImageIcon("src/GUI/Pictures/MediumBlack.png");
 	ImageIcon SmallBlack = new ImageIcon("src/GUI/Pictures/SmallBlack.png");
 
-	 //Creation des tous less autres elements à afficher :
+	 //Creation des tous les autres elements à afficher dans le tableau de jeu :
 	JLabel[] Big = new JLabel[9]; // Création de tous les labels de taille différentes pour afficher les images
 	JLabel[] Medium = new JLabel[9];
 	JLabel[] Small = new JLabel[9];
 
-	JLayeredPane[] LayeredPane = new JLayeredPane[9]; //creation des layeredPane qui permettent d'empiler des labels
-	JButton[] Button = new JButton[9]; //Creation des boutons invisibles de la grille
+	JLayeredPane[] LayeredPane = new JLayeredPane[9]; //creation des layeredPane qui permettent d'empiler des labels sur la grille
+	JButton[] Button = new JButton[9]; //Creation des boutons invisibles de la grille pour détecter où le joueur clique
 
-	JRadioButton smallSize = new JRadioButton("Small ring"); //Creation des 3 cases à cocher popour selectionner la taille
+	//Creation des 3 cases à cocher pour selectionner la taille :
+	JRadioButton smallSize = new JRadioButton("Small ring"); 
 	JRadioButton mediumSize = new JRadioButton("Medium ring");
 	JRadioButton bigSize = new JRadioButton("Big ring"); 
 	ButtonGroup group = new ButtonGroup(); // groupe qui permet de faire en sorte que l'on puisse selectionner qu'une taille à la fois
 
-	JLabel labelInfos = new JLabel("Default"); //Label qui affiche le texte
-	JLabel Inventory = new JLabel("Small pawn : , Medium pawn : , Big pawn : "); //Label qui va contenir l'affichage
-	JPanel Plateau = new JPanel(); // creation du conteneur du plateau de jeu
-	JPanel Infos = new JPanel(); // creation du conteneur pour le label qui affiche le texte
+	JLabel labelInfos = new JLabel("Default"); //Label qui affiche le texte d'intruction du jeu
+	JLabel Inventory = new JLabel("Small pawn : , Medium pawn : , Big pawn : "); //Label qui va contenir l'affichage de l'inventaire
+	JPanel Plateau = new JPanel(); // creation du conteneur du plateau de jeu 
+	JPanel Infos = new JPanel(); // creation du conteneur pour le label qui affiche le texte d'intruction
 	JPanel panelChoixTaille = new JPanel(); // création du panel qui contient les radiobutton du choix de la taille
 
-	//Création des éléments de la fenetre de démarage :
-	JFrame start = new JFrame("Start");
-	JFrame Home = new JFrame("Otrio");
-	JPanel namePanel = new JPanel(); // Création de tous les élements de la fenetre de démarage 
+	//Fenetre de démarage :
+	JFrame start = new JFrame("Start"); //Creation de la fenetre de démarage 
+	// Création de tous les élements de la fenetre de démarage : (textes et planels associés)
+	JPanel namePanel = new JPanel(); 
 	JPanel numberPanel = new JPanel(); //panel qui contient les radio box
 	JLabel welcomeTxt = new JLabel("Welcome to Otrio");
 	JLabel numberTxt = new JLabel("How many players ?");
 	JLabel nameTxt = new JLabel("Names ?");
 
-	// JRadioButton[] numberRadioButton = new JRadioButton[4];   //fonctionnerait avec la boucle for écrite en commentaire plus bas, mais ne fonctionne pas pour une raison inconnue, je obligé de délarer les boutons 1 par 1
-	JRadioButton numberRadioButton1 = new JRadioButton("1 Player");
+	// JRadioButton[] numberRadioButton = new JRadioButton[4];   //fonctionnerait avec la boucle for écrite en commentaire plus bas, mais ne fonctionne pas pour une raison inconnue, je sui obligé de déclarer les boutons 1 par 1
+	JRadioButton numberRadioButton1 = new JRadioButton("1 Player VS IA");
 	JRadioButton numberRadioButton2 = new JRadioButton("2 Player");
 	JRadioButton numberRadioButton3 = new JRadioButton("3 Player");
 	JRadioButton numberRadioButton4 = new JRadioButton("4 Player");
@@ -92,20 +87,23 @@ public class GUI {
 	JTextField namePlayerField2 = new JTextField();
 	JTextField namePlayerField3 = new JTextField();
 	JTextField namePlayerField4 = new JTextField();
+
+	JFrame Home = new JFrame("Otrio"); // Création de la fenetre de jeu
 	
-	public boolean againstPC = false;
-	public boolean moreColors = false;
+	
 
 	public GUI() {}
-
+	public boolean startButtonState = false;
+	public boolean againstPC = false;
+	public boolean moreColors = false;
 	int i ;
 	int Pos = 10 ;	
 	int Size; 	
-	public boolean startButtonState ;
+	
 	public int PlayerNumber =2; //2 car plus bas on dit que la valeure selectionnée par défaut est 2.
 		
 	public void startWindow (){
-		//création des éléments de la fenetre de démarrage :
+		//configuration et disposition des éléments de la fenetre de démarrage :
 		
 		start.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //permet d'arreter le prog en cliquant sur la croix
 		start.setSize(450,450); 
@@ -119,41 +117,42 @@ public class GUI {
 
 		start.setLayout(null); // on ajoute et dimmensionne les label dans les Panel
 		namePanel.setBounds(200, 50, 200, 300); //on place les 2 conteneur principaux et on définit leur layout comme grille à une colonne pour pouvoir empiler les éléments
-		namePanel.setLayout(new GridLayout(5,1) );
+		namePanel.setLayout(new GridLayout(5,1) ); // on met un layoud grid pour que les élements soient disposés les uns au dessus des autres
 		namePanel.setBackground(Color.white);
 		numberPanel.setBackground(Color.white);
 		numberPanel.setBounds(0, 50, 200, 300);
 		numberPanel.setLayout(new GridLayout(5,1) );
 		
 
-			/*for (i=0 ; i < 4 ; i++){
-			numberRadioButton[i] = new JRadioButton();
-			numberRadioButtonString = (i+1 + " Player"); // on actualise la variable qui conteient le nom du bouton
+		/*for (i=0 ; i < 4 ; i++){
+		numberRadioButton[i] = new JRadioButton();
+		numberRadioButtonString = (i+1 + " Player"); // on actualise la variable qui conteient le nom du bouton
 
-			numberRadioButton[i].setText(numberRadioButtonString);
-			numberPanel.add(numberRadioButton[i]);
-			}*/
+		numberRadioButton[i].setText(numberRadioButtonString);
+		numberPanel.add(numberRadioButton[i]);
+		}*/
 
-			// Ajout des boutons dans le bon panel : 
-			//IMPOSSIBLE d'utiliser la boucle ci-dessus pour les créer et ajouter les boutons dans le panel : a chaque lancement j'obtiens une fenetre différente !!!!
-			group2.add(numberRadioButton1);
-			group2.add(numberRadioButton2);
-			group2.add(numberRadioButton3);
-			group2.add(numberRadioButton4);
-			numberRadioButton2.setSelected(true);
-			
-			namePanel.add(nameTxt);
-			
-			numberPanel.add(numberTxt);
-			numberPanel.add(numberRadioButton1);
-			numberPanel.add(numberRadioButton2);
-			numberPanel.add(numberRadioButton3);
-			numberPanel.add(numberRadioButton4);
+		// Ajout des boutons dans le bon panel : 
+		//IMPOSSIBLE d'utiliser la boucle ci-dessus pour les créer et ajouter les boutons dans le panel : a chaque lancement j'obtiens une fenetre différente !!!!
+		group2.add(numberRadioButton1);
+		group2.add(numberRadioButton2);
+		group2.add(numberRadioButton3);
+		group2.add(numberRadioButton4);
+		numberRadioButton2.setSelected(true);
+		
+	
+		
+		numberPanel.add(numberTxt); // ajout des Radios boutons du nb de joueur dans le bon panel
+		numberPanel.add(numberRadioButton1);
+		numberPanel.add(numberRadioButton2);
+		numberPanel.add(numberRadioButton3);
+		numberPanel.add(numberRadioButton4);
 
-			namePanel.add(namePlayerField1);
-			namePanel.add(namePlayerField2);
-			namePanel.add(namePlayerField3);
-			namePanel.add(namePlayerField4);
+		namePanel.add(nameTxt);
+		namePanel.add(namePlayerField1); // ajout des zones de txt dans le bon panel
+		namePanel.add(namePlayerField2);
+		namePanel.add(namePlayerField3);
+		namePanel.add(namePlayerField4);
 			
 
 
@@ -165,20 +164,19 @@ public class GUI {
 		start.add(namePanel);
 
 
-		numberRadioButton1.addActionListener(e -> PlayerNumber = 1);
+		numberRadioButton1.addActionListener(e -> PlayerNumber = 1); //action  effectuée en fonction du nombre de joueur selectionné
 		numberRadioButton2.addActionListener(e -> PlayerNumber = 2);
 		numberRadioButton3.addActionListener(e -> PlayerNumber = 3);
 		numberRadioButton4.addActionListener(e -> PlayerNumber = 4);
 
-		//while(startButtonState == false) {
-			startButton.addActionListener(e -> startButtonAction());
-			
-		//}
+		
+			startButton.addActionListener(e -> startButtonAction()); //voir à la fin pour voir toutes les actions effectuées quand le bouton start est pressé
+	
 
 	}
 
 	
-	public void create() {
+	public void create() { //créer la fenetre de jeu 
 		
 		Home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //permet d'arreter le prog en cliquant sur la croix
 		Home.setSize(800,400); // défini la taille de la fenetre à un carré de 100px de moins que la hauteur de l'écran
@@ -207,7 +205,6 @@ public class GUI {
 		Infos.add(labelInfos); // on ajoute le label à son conteneur
 
 		//config du conteneur des boutons du choix de taille;
-		//panelChoixTaille.setLayout(null);
 		panelChoixTaille.setBounds(400, 100, 400, 50); //def taille et position
 		panelChoixTaille.setBackground(Color.white);
 		Home.add(panelChoixTaille); // on ajoute le panel à la fenetre
@@ -215,7 +212,7 @@ public class GUI {
 	
 		Inventory.setBounds(450, 200, 400, 200 ); //on dimmensionne et positionne le label
 
-		//config du bouton choix de taille :
+		//config de l'affichage des boutons de choix de taille :
 		panelChoixTaille.add(smallSize);
 		panelChoixTaille.add(mediumSize);
 		panelChoixTaille.add(bigSize);
@@ -224,7 +221,7 @@ public class GUI {
 		mediumSize.setOpaque(false);
 		bigSize.setOpaque(false);
 		
-		//config du group de case a cocher:
+		//config du group de case a cocher (permet de pouvoir n'en cocher qu'une):
 		group.add(smallSize);
 		group.add(mediumSize);
 		group.add(bigSize);
@@ -233,7 +230,6 @@ public class GUI {
 			Button[i] = new JButton();
 			LayeredPane[i] = new JLayeredPane(); // création des 9 layeredPane
 			
-			//LayeredPane[i].setLayout(null); // sert à dire que l'on veut placer manuellement les éléements dans les layeredPane
 			Big[i] = new JLabel(); // création pour chaque case des 3 labels
 			Medium[i] = new JLabel();
 			Small[i] = new JLabel();
@@ -253,27 +249,19 @@ public class GUI {
 			Plateau.add(LayeredPane[i]);// on ajoute les layered pan au plateau
 		}
 
-		Home.setVisible(true);
+		Home.setVisible(true); //Finalement, nous rendons la fenetre configurée visible
 	}
 				
 
-	public void tryPawn(int PlayerId, Player[] P) {
-		Pos = 10;
-		System.out.println("Tout début place pawn, Pos ="+ Pos);
-			
-		labelInfos.setText(P[PlayerId].name + "'s turn"); //affiche l'instruction dans le label d'info
-		smallSize.setSelected(true);
-		Size =0; //o car par défaut c'est "small ring" qui est coché
-		//Size =0; // on le reprécise au cas ou le joueur garde small size selectionné
-		
+	public void tryPawn(int PlayerId, Player[] P) { //On rentre dans une boucle et on attend que le joueur clique sur une case pour pouvoir ensuite utiliser getLastX/y
+		Pos = 10; // valeure arbritraire qui ne correspond pas a un index de case		
 		while (Pos ==10){  //Tant qu'un bouton du plateau n'a pas été cliqué on reste dans la boucle
 			
-
 			smallSize.addActionListener(e -> Size =0); //on check quelle taille est selectionée et on actualise la variable size
 			mediumSize.addActionListener(e -> Size =1);
 			bigSize.addActionListener(e -> Size =2);
 
-			//ADAM, POURQUOI LA BOUCLE NE MARCHE PAS ?
+			//Il aurait fallu utiliser la boucle ci-dessous mais cela ne fonctionne pas;
 			/*for (i = 0 ; i<9 ; i++){
 			Button[i].addActionListener(e -> Pos = i);
 			}*/
@@ -326,11 +314,13 @@ public class GUI {
 						if(i == 0 && G[k][j][i] == 4) Small[CurPos].setIcon(SmallBlack);
 						if(i == 1 && G[k][j][i] == 4) Medium[CurPos].setIcon(MediumBlack);
 						if(i == 2 && G[k][j][i] == 4) Big[CurPos].setIcon(BigBlack);
+					
 
 					}
 				}
 			}
 		}
+		labelInfos.setText(P[n].name + "'s turn"); //affiche l'instruction dans le label d'info
 
 		setInventory("You have " + P[n].playercircles[0][1] + " small, " + P[n].playercircles[1][1] + " medium, and " + P[n].playercircles[2][1] + " large circles");
 
@@ -356,7 +346,7 @@ public class GUI {
 
 		return Posy;
 	}	
-	public void clear() {
+	public void clear() { // on efface tout
 
 		for(int i = 0 ; i<9 ; i++) {
 
@@ -367,15 +357,15 @@ public class GUI {
 		}
 	}
 
-	public void setDisplayedText(String text){
+	public void setDisplayedText(String text){ //permet d'afficher du txt dans la fenetre de jeux
 		labelInfos.setText(text);
 	}
 
-	public int getLastSize(){
+	public int getLastSize(){ //Retourne la dernière coordonée X jouée (après un TryPawn)
 		return Size;
 	}
 
-	public String getPlayerName (int Player) {
+	public String getPlayerName (int Player) { //retourne le nom d'un joueur en fc de son num
 
 		String name ="";
 
@@ -404,7 +394,7 @@ public class GUI {
 		
 		System.out.println("Début de la partie");
 
-		if(PlayerNumber == 2){
+		if(PlayerNumber == 2){ // ouvre la popup de si on veut jouer avec 2 couleurs
 
 			Object[] options = {"Yes", "No"};
 
@@ -422,35 +412,34 @@ public class GUI {
 
 			if(n == JOptionPane.YES_OPTION){
 				moreColors = true;
-				PlayerNumber = 4;
+				PlayerNumber = 4; //utile pour la gestion --> voir avec Adam
 			}
 		}
 		else if(PlayerNumber == 1){
 			againstPC = true;
 			PlayerNumber = 2;
 		}
-	
+		startButtonState = true;
 		start.dispose(); //ferme la fenetre quand on a cliqué sur start
 		create();
-		startButtonState = true;
 
 	}
 
-	public void noOneWon(){
+	public void noOneWon(){ //Pop-up qui dit que personne n'a gagné
 
-		JOptionPane.showMessageDialog(start, "Unfortunately nobody won");
+		JOptionPane.showMessageDialog(start, "Unfortunately nobody won"); 
 		Home.dispose();
 
 	}
 
-	public void gameWon(String name){
+	public void gameWon(String name){ ////Pop-up qui dit que qqun a gagné
 
 		JOptionPane.showMessageDialog(start, "Congratulations to " + name + " who won the game!");
 		Home.dispose();
 
 	}
 
-	public boolean askReplay(){
+	public boolean askReplay(){ //popup qui demande si on veut rejouer 
 
 		Object[] options = {"Yes", "No"};
 
@@ -465,7 +454,7 @@ public class GUI {
 
 			while(n != JOptionPane.YES_OPTION && n != JOptionPane.NO_OPTION){
 				try{
-					TimeUnit.MILLISECONDS.sleep(1);
+					TimeUnit.MILLISECONDS.sleep(1); //delai car sinon le programme va trop vite --> bug
 				}
 				catch(InterruptedException e){
 					e.printStackTrace();
@@ -485,9 +474,7 @@ public class GUI {
 		return PlayerNumber;
 	}
 
-	public boolean gameIsStarted(){
-		return startButtonState;
-	}
+	
 
 	public void setInventory (String InventoryText){ //permet de mettre à jour le txt de l'inventaire
 		Inventory.setText(InventoryText);
