@@ -5,70 +5,17 @@ import GUI.GUI;
 
 public class gest {
 
-    //
-    // Thibault
-    //
-
-    //fonction pour demander le nombre de joueurs
-    public static int askNumPlayers(){
-
-        int num;
-
-        System.out.println("===========================");
-        System.out.println("Bienvenue au jeu d'Otrio \n");
-        System.out.print("Saisissez le nombre de joueurs dans votre jeu: ");
-
-        num = Lire.i();
-
-        while(num < 2 || num > 4){
-
-            System.out.println("Le nombre de joueurs ne peut pas dépasser 4");
-            num = Lire.i();
-
-        }
-
-        return num;
-    }
-
-    
-
     //Creer les jouers
     public static Player[] createPlayers(int num, boolean contrepc, GUI gui, boolean moreColors){
-        int i;
+
         Player[] p = new Player[num];
-
-
     
-        for(i = 0; i < num; i++){
+        for(int i = 0; i < num; i++){
 
             p[i] = new Player(i);
 
             if((!contrepc || i != num-1) && !moreColors){
     
-                /*System.out.print("Donnez le nom du " + (i+1) + "ieme joueur: ");
-                p[i].name = Lire.S();
-                System.out.print("\n");
-        
-                while(p[i].name == ""){
-        
-                    System.out.print("Donnez un nom non nul pour le " + (i+1) + "ieme joueur: ");
-                    p[i].name = Lire.S();
-                    System.out.print("\n");
-        
-                }*/
-        
-                /*System.out.print("Donnez le couleur du " + (i+1) + "ieme joueur: ");
-                p[i].color = Lire.S();
-                System.out.print("\n");
-        
-                while(p[i].color == ""){
-        
-                    System.out.print("Donnez un couleur non nul pour le " + (i+1) + "ieme joueur: ");
-                    p[i].color = Lire.S();
-                    System.out.print("\n");
-                    
-                }
-                */
                 String name = gui.getPlayerName(i);
                 if(name.equals("")){
                     p[i].name = ("Player " + (i+1));
@@ -108,6 +55,11 @@ public class gest {
         return p;
     }
     
+
+    //================================
+    //  Thibault
+    //================================
+
     //fonction pour initialiser le tableau du jeu
     public static int[][][] initialiseGameTable(){
 
@@ -125,32 +77,14 @@ public class gest {
         return gT;
     }
 
-    public static int convertSize(char c) throws mPE{
-        int t;
-        switch (c) {
-            case 'p':
-                t = 0;
-                break;
-            case 'P':
-                t = 0;
-            break;
-            case 'm':
-                t = 1;
-            break;
-            case 'M':
-                t = 1;
-            break;
-            case 'g':
-                t = 2;
-            break;
-            case 'G':
-                t = 2; 
-            break;
-            default:
-                throw new mPE("Taille inconnue");
-        }
-        return t;
-    }
+    //================================
+    //  
+    //================================
+
+
+    //================================
+    //  Thibault
+    //================================
 
     public static boolean hasElement(Player P, int t, GUI s){
         if(P.playercircles[t][1] == 0){
@@ -162,6 +96,10 @@ public class gest {
             return true;
         }
     }
+
+    //================================
+    // 
+    //================================
 
 
     //Placer un pion

@@ -14,19 +14,6 @@ public class aff {
     }
 
 
-    //Methode pour afficher le tableau du jeu sur l'ecran
-    public static void printGameTable(int[][][]g){
-
-        for(int i = 2; i >= 0; i--){
-
-            System.out.print("\n\n");
-            printGameTableLine(g,i);
-
-        }
-        System.out.print("\n\n");
-
-    }
-
     public static void printTrophy(){
         System.out.println("⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀");
         System.out.println("⠀⠀⣀⠀⢀⣶⣿⡛⠛⠋⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠙⠛⢛⣿⣶⡄⠀⣀⠀⠀");
@@ -81,28 +68,6 @@ public class aff {
             System.out.print(Integer.toString(gameTable[j][i][2]) +" "+ Integer.toString(gameTable[j][i][2]) +" "+ Integer.toString(gameTable[j][i][2]) +" "+ Integer.toString(gameTable[j][i][2]) +" "+ Integer.toString(gameTable[j][i][2]));
         
         }
-    }
-
-    //Afficher jouers avec nombre de pions
-    public static void writePlayerTab(Player p){
-
-        System.out.println("Nom de Joueur: " + p.name);
-        System.out.println("ident. | quant. |     taille ");
-    
-        for(int i = 0; i < 3; i++){
-    
-            for(int j = 0; j < 2; j++){
-    
-                System.out.print("     ");
-                System.out.print(p.playercircles[i][j] + " | ");
-    
-            }
-            
-            if(i == 0) System.out.println(" <- cercles petits");
-            if(i == 1) System.out.println(" <- cercles moyens");
-            if(i == 2) System.out.println(" <- cercles grands");
-        }
-        System.out.print("\n");
     }
 
 }
