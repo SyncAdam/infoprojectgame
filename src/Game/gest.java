@@ -101,6 +101,24 @@ public class gest {
     // 
     //================================
 
+    public static boolean possibleToPlay(int[][][]M,  Player player){
+
+		for(int i = 0; i < 3; i++){
+
+			for(int j = 0; j < 3; j++){
+
+				if(M[j][i][0] == 0 && player.playercircles[0][1] !=0) return true;	
+
+				if(M[j][i][1] == 0 && player.playercircles[1][1] !=0) return true;
+
+				if(M[j][i][2] == 0 && player.playercircles[2][1] !=0) return true;
+			}
+		}
+		return false;
+
+	}
+	
+
 
     //Placer un pion
     public static int[][][] placeElement(int[][][] M, Player Player, int t, int[] coord) throws mPE{

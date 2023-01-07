@@ -42,7 +42,6 @@ public static void main(String[]args){
     aff.clearOutputStream();
 
     int cp = 0; // joueur actuel
-    int nt = 0; //nombre de tour;
     int t = -1; //taille
     int[] coords = new int[2];  //coordonnées X - Y pour placer les pions dans le tableau 3D du jeu
     int[][][] gameTable = new int[3][3][3]; //Tableau 3D du jeu
@@ -71,6 +70,13 @@ public static void main(String[]args){
 
     System.out.println("Done.");
 
+    try{
+        TimeUnit.MILLISECONDS.sleep(50);
+    }
+    catch(InterruptedException e){
+        e.printStackTrace();
+    }
+
     Playertableau = gest.createPlayers(numplayers, contrepc, screen, moreColors);       //fonction qui crée un tableau de type Player
     System.out.println("Creation des joueurs...");
     //aff.clearOutputStream();
@@ -82,50 +88,51 @@ public static void main(String[]args){
 
         while(!gagne){
 
-            if(cp == numplayers) cp = 0; //vue qu'on itere l'indexe du joueur actuel, si ce nombre d
+            if(gest.possibleToPlay(gameTable,Playertableau[cp])){
+                if(Playertableau[cp].isRobot == false){
 
-            screen.refreshScreen(gameTable, Playertableau, cp);
-
-            if(Playertableau[cp].isRobot == false){
-
-                screen.tryPawn(cp, Playertableau);
-                coords[0] = screen.getLastX();
-                coords[1] = screen.getLastY();
-                t = screen.getLastSize();
-                
-            }
-            else{
-
-                coords[0] = (int)Math.ceil(Math.random()*3);    // entre 1 et 3
-                coords[1] = (int)Math.ceil(Math.random()*3);    // entre 1 et 3
-                t = (int)(Math.ceil(Math.random()*3)-1);    //entre 0 et 2
-
-            }
+                    screen.tryPawn(cp, Playertableau);
+                    coords[0] = screen.getLastX();
+                    coords[1] = screen.getLastY();
+                    t = screen.getLastSize();
+                    
+                }
+                else{
     
-            if(gest.hasElement(Playertableau[cp], t, screen) && nt != (numplayers*9)-1){
-                try{
-                    gameTable = gest.placeElement(gameTable, Playertableau[cp], t, coords);
-                    screen.clear();
-                    if(fonction.check(gameTable, Playertableau[cp].playercircles[0][0]) != 0){
-                        gagne = true;
-                        aff.printTrophy();
-                        screen.gameWon(Playertableau[cp].name);
+                    coords[0] = (int)Math.ceil(Math.random()*3);    // entre 1 et 3
+                    coords[1] = (int)Math.ceil(Math.random()*3);    // entre 1 et 3
+                    t = (int)(Math.ceil(Math.random()*3)-1);    //entre 0 et 2
+    
+                }
+        
+                if(gest.hasElement(Playertableau[cp], t, screen) && gest.possibleToPlay(gameTable, Playertableau[cp])){
+                    try{
+                        gameTable = gest.placeElement(gameTable, Playertableau[cp], t, coords);
+                        if(fonction.check(gameTable, Playertableau[cp].playercircles[0][0]) != 0){
+                            gagne = true;
+                            aff.printTrophy();
+                            screen.gameWon(Playertableau[cp].name);
+                        }
+                        cp++;
+                        if(cp == numplayers) cp = 0; //vue qu'on itere l'indexe du joueur actuel, si ce nombre d
+                        screen.clear();
+                        screen.refreshScreen(gameTable, Playertableau, cp);
                     }
-                    cp++;
-                    nt++;
+                    catch(mPE e){
+                        e.printStackTrace();
+                        screen.setDisplayedText("You can't play here !");
+                    }
+    
                 }
-                catch(mPE e){
-                    e.printStackTrace();
-                    screen.setDisplayedText("You can't play here !");
-                }
-
             }
-            else if(!gest.hasElement(Playertableau[cp], t, screen)) continue; 
-            else{
+            else if(!gest.possibleToPlay(gameTable, Playertableau[cp])){
                 gagne = true;
                 System.out.println("Personne n'a gagné");
                 screen.noOneWon();
-            }
+
+        }
+            else if(!gest.hasElement(Playertableau[cp], t, screen)) continue; 
+            
             try{
                 TimeUnit.MILLISECONDS.sleep(50);
             }
@@ -159,11 +166,20 @@ public static void main(String[]args){
 
             Playertableau = gest.createPlayers(numplayers, contrepc, screen, moreColors);
             System.out.println("Creation des joueurs...");
+
+            try{
+                TimeUnit.MILLISECONDS.sleep(20);
+            }
+            catch(InterruptedException e){
+                e.printStackTrace();
+            }
+
+            screen.clear();
+            screen.refreshScreen(gameTable, Playertableau, cp);
             gagne = false;
             contrepc = false;
             moreColors = false;
             cp = 0;
-            nt = 0;
         }
         else{
             aff.clearOutputStream();
