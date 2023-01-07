@@ -111,12 +111,15 @@ public static void main(String[]args){
                         if(fonction.check(gameTable, Playertableau[cp].playercircles[0][0]) != 0){
                             gagne = true;
                             aff.printTrophy();
+                            screen.clear();
+                            screen.refreshScreen(gameTable, Playertableau, cp);
                             screen.gameWon(Playertableau[cp].name);
                         }
                         cp++;
                         if(cp == numplayers) cp = 0; //vue qu'on itere l'indexe du joueur actuel, si ce nombre d
                         screen.clear();
                         screen.refreshScreen(gameTable, Playertableau, cp);
+                        
                     }
                     catch(mPE e){
                         e.printStackTrace();
